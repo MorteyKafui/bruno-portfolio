@@ -120,7 +120,7 @@ export function Hero({
           initial={{ opacity: 0, y: 48 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: editorialEase, delay: 0.2 }}
-          className="relative mx-auto w-full max-w-[20rem] self-end sm:max-w-[24rem] lg:col-span-5 lg:max-w-none"
+          className="relative mx-auto w-full max-w-[20rem] self-end mix-blend-multiply sm:max-w-[24rem] lg:col-span-5 lg:max-w-none"
         >
           <motion.div
             style={scrollLinked ? { scale, y } : undefined}
@@ -133,7 +133,7 @@ export function Hero({
               height={portrait.height}
               priority
               sizes="(min-width: 1024px) 38vw, (min-width: 640px) 24rem, 20rem"
-              className="h-auto w-full max-h-[78svh] object-contain object-bottom mix-blend-multiply"
+              className="h-auto max-h-[78svh] w-full object-contain object-bottom"
             />
           </motion.div>
         </motion.div>
