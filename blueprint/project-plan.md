@@ -950,15 +950,22 @@ On mobile:
 
 Use a sticky navigation.
 
-Desktop:
+Desktop (revised 2026-09-07, see section 8):
 
 ```text
-Professor Name | About | Research | Services | Publications | Teaching | Blog | Contact | CV
+I.K. Acquah | About | Research | Services | Get in touch | Blog || EN v | theme | Download CV
 ```
+
+The wordmark is the lecturer's name set in the display serif, legible first,
+distinctive second. The five labels are the complete primary menu; utility
+controls (language switcher, light/dark toggle, CV download) sit after them.
+A label whose route has not shipped yet is hidden by configuration, never
+linked to a missing page.
 
 The navigation should subtly change after scrolling.
 
-Mobile should use a full-screen animated menu.
+Mobile should use a full-screen animated menu that also carries the language
+list, theme toggle, and CV download.
 
 Use an active section indicator where appropriate.
 
@@ -1122,3 +1129,118 @@ The application must not contain:
 - invalid semantic HTML.
 
 The production build must succeed before the project is considered complete.
+
+---
+
+## 8. Revision 2 (2026-09-07) - foundation requirements added after the Feature 1 review
+
+The owner reviewed the first homepage slice and added requirements that cut
+across every future page. They are recorded here so the build plan, overview,
+and specs stay aligned instead of drifting.
+
+### 8.1 The subject
+
+The site belongs to **Dr Isaac Kwesi Acquah**: medical physicist, lecturer,
+researcher, and consultant. Verified facts supplied so far (from the owner's
+earlier single-page site):
+
+- Lecturer, Department of Physics Education, University of Education,
+  Winneba (UEW), Ghana.
+- Formerly Medical Physicist, Korle-Bu Teaching Hospital.
+- Doctoral research (PhD).
+- Research themes: MRI-only radiotherapy and synthetic CT generation, AI in
+  medical imaging, radiation protection with QA and dose safety, physics
+  education.
+- Stated values: clinical rigour, pedagogical innovation.
+- Offers medical physics and academic consultancy; clinical or
+  radiation-related services carry a regulatory disclaimer.
+- Public email is shown obfuscated as `ikacquah [at] uew.edu.gh`.
+- Location: Winneba / Accra, Ghana. Copyright line: Dr Isaac Kwesi Acquah,
+  all rights reserved.
+
+Not yet supplied and therefore still placeholders: degrees and institutions,
+appointment dates, publication list with DOIs, named consultancy services,
+course names, awards and memberships, personal ORCID / Scholar / ResearchGate
+/ GitHub URLs, the sanitized CV PDF, and the production domain.
+
+### 8.2 Internationalization is core architecture
+
+- Locale-aware URLs: `/en`, `/en/about`, `/fr/research/...`. The locale is a
+  route segment, never client-only state.
+- Supported locales are configured in one place. English (`en`) is the only
+  enabled locale until reviewed translations exist; `fr`, `es`, `pt`, `ar`
+  are pre-declared with names and text direction so enabling one is a
+  configuration change plus content, not a rewrite.
+- Detection priority: explicit choice, saved preference (cookie), browser
+  `Accept-Language`, default `en`. Never IP or geography alone.
+- The switcher lives in the global navigation, shows language names (not only
+  flags), preserves the current page, persists the choice, works on keyboard
+  and mobile. Locales that are declared but not enabled appear as disabled
+  "coming soon" entries so the multilingual intent is visible without serving
+  unreviewed content.
+- UI strings live in message dictionaries; academic content lives in the data
+  layer as per-field localized values with English fallback. Publication
+  metadata is never translated. Blog posts are localized per file and only
+  when a reviewed translation exists.
+- Server and client render the same locale; no flash of English before a
+  switch; correct `<html lang dir>`; localized metadata, canonical, and
+  `hreflang` with `x-default`.
+- RTL readiness: logical CSS properties, direction-aware icons, an Arabic
+  companion font mapped per locale when `ar` is enabled.
+- Machine translation may draft; published academic content is human-reviewed.
+
+### 8.3 Light and dark mode
+
+Site-wide theme toggle in the navigation, persisted per visitor, defaulting to
+the system preference. The toggle plays a short synthesized "light switch"
+click on user action. Dark sections keep their cinematic rhythm in dark mode
+through a lifted, teal-tinted surface rather than inverting to light.
+
+### 8.4 Cookie consent
+
+A small, elegant consent notice explains that the site stores functional
+preferences (language, theme) and records the visitor's choice for a year. No
+analytics ship until consent-gated analytics are planned.
+
+### 8.5 Downloadable CV
+
+A public, sanitized CV PDF is downloadable from the header, hero area, and
+footer. A clearly labelled placeholder PDF is served until the real file is
+supplied.
+
+### 8.6 Header and footer blocks
+
+The header adapts the `@efferd/header-2` block (floating pill that compacts on
+scroll) and the footer adapts `@efferd/footer-6` (layered sticky footer with
+animated link groups). Both are restyled to this design system and wired to
+the i18n, theme, and data layers; nothing from the blocks' demo content ships.
+
+### 8.7 Blog
+
+The blog uses MDX files as its authoring format, taking cues from the Next.js
+blog for reading experience. Still delivered as its own feature.
+
+### 8.8 Interactivity and craft
+
+The site should feel like a medical physics portfolio, not a template:
+domain-specific interactive moments (an MRI to synthetic CT comparison, an
+isodose field that responds to the pointer), spring-based micro-interactions
+(navigation indicator, magnetic calls to action, the bulb toggle), and the
+layered footer reveal. All gated by pointer capability and
+`prefers-reduced-motion`, never at the cost of performance or accessibility.
+
+### 8.9 Instant navigation
+
+Reference: Next.js 16.3 Instant Navigations (nextjs.org/blog/making-v0-
+navigations-instant). Every route is prerendered per locale, no dynamic data
+is read in layouts, and the proxy only redirects and sets the locale cookie,
+so client navigations stay instant with static prefetch. Cache Components stay
+off until dynamic personalized content exists; the `instant()` Playwright
+helper is the intended regression test once browser tests are set up.
+
+### 8.10 SEO and performance
+
+Localized titles and descriptions, canonical URLs, `hreflang`, Open Graph with
+a generated social image, Person structured data, sitemap and robots, and
+`next/image` everywhere. Performance budgets apply on mobile as much as
+desktop.
