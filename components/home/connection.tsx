@@ -53,6 +53,7 @@ export function Connection() {
             <Reveal delay={0.2}>
               <Button
                 size="lg"
+                nativeButton={false}
                 render={<Link href={`mailto:${professor.email}`} />}
               >
                 {connection.ctaLabel}

@@ -97,13 +97,18 @@ export function Hero({
             {...fade(1.6)}
             className="mt-10 flex flex-wrap items-center gap-3 md:mt-12"
           >
-            <Button size="lg" render={<Link href={primaryCta.href} />}>
+            <Button
+              size="lg"
+              nativeButton={false}
+              render={<Link href={primaryCta.href} />}
+            >
               {primaryCta.label}
               <ArrowDown className="size-4 transition-transform duration-300 group-hover/button:translate-y-0.5" />
             </Button>
             <Button
               size="lg"
               variant="outline"
+              nativeButton={false}
               render={<Link href={secondaryCta.href} />}
             >
               {secondaryCta.label}
