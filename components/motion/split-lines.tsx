@@ -14,6 +14,7 @@ export interface SplitLine {
 interface SplitLinesProps {
   lines: (string | SplitLine)[];
   as?: HeadingTag;
+  id?: string;
   className?: string;
   lineClassName?: string;
   delay?: number;
@@ -42,6 +43,7 @@ const lineVariants: Variants = {
 export function SplitLines({
   lines,
   as = "h2",
+  id,
   className,
   lineClassName,
   delay = 0,
@@ -61,6 +63,7 @@ export function SplitLines({
 
   return (
     <Container
+      id={id}
       className={className}
       initial={reduce ? "visible" : "hidden"}
       variants={containerVariants}

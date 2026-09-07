@@ -7,6 +7,7 @@ interface SectionHeadingProps {
   eyebrow: string;
   lines: (string | SplitLine)[];
   as?: "h1" | "h2" | "h3";
+  id?: string;
   size?: "xl" | "lg" | "md";
   className?: string;
   headingClassName?: string;
@@ -23,6 +24,7 @@ export function SectionHeading({
   eyebrow,
   lines,
   as = "h2",
+  id,
   size = "lg",
   className,
   headingClassName,
@@ -32,6 +34,7 @@ export function SectionHeading({
       <Eyebrow index={index}>{eyebrow}</Eyebrow>
       <SplitLines
         as={as}
+        id={id}
         lines={lines}
         className={cn("uppercase", sizes[size], headingClassName)}
       />

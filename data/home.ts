@@ -89,8 +89,13 @@ export const educator = {
 export const perspective = {
   index: "05",
   eyebrow: "Perspective",
-  statement:
-    "Good physics is invisible in the clinic. It shows up as confidence: in an image, in a dose, in a decision.",
+  // Broken into display lines; the full sentence reads as one statement.
+  lines: [
+    "Good physics is invisible",
+    "in the clinic. It shows up",
+    "as confidence: in an image,",
+    "in a dose, in a decision.",
+  ],
 };
 
 export const connection = {

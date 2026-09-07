@@ -62,6 +62,37 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 
   --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-scroll-cue: scroll-cue 2.4s var(--ease-editorial) infinite;
+  --animate-drift: drift 22s ease-in-out infinite alternate;
+
+  @keyframes scroll-cue {
+    0% {
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+    45% {
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+    55% {
+      transform: scaleY(1);
+      transform-origin: bottom;
+    }
+    100% {
+      transform: scaleY(0);
+      transform-origin: bottom;
+    }
+  }
+
+  @keyframes drift {
+    from {
+      transform: translate3d(-6%, -4%, 0) scale(1);
+    }
+    to {
+      transform: translate3d(6%, 6%, 0) scale(1.12);
+    }
+  }
 }
 
 :root {
@@ -147,7 +178,7 @@
 
 @utility text-display-xl {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 11.5vw, 11.5rem);
+  font-size: clamp(3rem, 9.2vw, 9.5rem);
   line-height: 0.88;
   letter-spacing: -0.025em;
 }
