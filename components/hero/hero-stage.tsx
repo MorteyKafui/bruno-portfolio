@@ -55,7 +55,7 @@ export function HeroStage({
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative isolate flex min-h-svh flex-col overflow-hidden bg-background pt-24 text-foreground md:pt-28"
+      className="relative isolate flex min-h-svh flex-col overflow-x-clip overflow-y-hidden bg-background pt-24 text-foreground md:pt-28"
     >
       <motion.div
         initial={reduce ? false : { opacity: 0 }}
@@ -66,8 +66,8 @@ export function HeroStage({
         <HeroBackdrop />
       </motion.div>
 
-      <div className="container-editorial grid flex-1 grid-cols-1 items-end gap-x-6 lg:grid-cols-12">
-        <div className="relative z-10 pt-8 pb-12 lg:col-span-7 lg:pb-24">
+      <div className="container-editorial grid flex-1 grid-cols-1 items-end gap-x-8 gap-y-8 lg:grid-cols-12 lg:gap-x-10">
+        <div className="relative z-20 min-w-0 pt-8 pb-8 lg:col-span-7 lg:pb-24 lg:pe-4">
           <motion.div {...enter} className="flex flex-col gap-3">
             <Eyebrow className="text-accent">{eyebrow}</Eyebrow>
             <p className="text-eyebrow text-muted-foreground">{roles.join("  \u00b7  ")}</p>
@@ -80,7 +80,7 @@ export function HeroStage({
             delay={reduce ? 0 : 0.12}
             stagger={0.07}
             lines={displayLines}
-            className="text-display-xl mt-8 md:mt-10"
+            className="text-display-xl mt-8 max-w-full pe-[0.12em] md:mt-10"
           />
 
           <motion.p
@@ -128,7 +128,7 @@ export function HeroStage({
             mass: 0.85,
             opacity: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
           }}
-          className="portrait-plate relative mx-auto w-full max-w-[20rem] self-end sm:max-w-[24rem] lg:col-span-5 lg:max-w-none"
+          className="portrait-plate relative z-0 mx-auto w-full max-w-[16rem] self-end sm:max-w-[20rem] md:max-w-[24rem] lg:col-span-5 lg:max-w-none"
         >
           <Image
             key={portrait.src}

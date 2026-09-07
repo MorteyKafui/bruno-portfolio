@@ -13,7 +13,7 @@ export function Educator({ locale }: { locale: Locale }) {
     <Section theme="white" aria-labelledby="educator-heading">
       <div className="container-editorial">
         <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-6">
+          <div className="min-w-0 lg:col-span-6">
             <SectionHeading
               id="educator-heading"
               index={educator.index}

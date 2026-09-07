@@ -27,7 +27,7 @@ export function Statement({ locale }: { locale: Locale }) {
   return (
     <Section id={sectionIds.about} theme="white" aria-labelledby="statement-heading">
       <div className="container-editorial grid gap-14 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-5">
+        <div className="min-w-0 lg:col-span-5">
           <SectionHeading
             id="statement-heading"
             index={statement.index}

@@ -23,7 +23,7 @@ export async function ResearchAreas({ locale }: { locale: Locale }) {
 
       <div className="container-editorial">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
+          <div className="min-w-0 lg:col-span-7">
             <SectionHeading
               id="research-heading"
               index={research.index}

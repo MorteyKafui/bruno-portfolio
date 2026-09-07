@@ -39,11 +39,16 @@ export function SectionHeading({
   }));
 
   return (
-    <div className={cn("flex flex-col gap-8 md:gap-10", className)}>
+    <div className={cn("@container min-w-0 flex flex-col gap-8 md:gap-10", className)}>
       <Eyebrow index={index} className={eyebrowClassName}>
         {eyebrow}
       </Eyebrow>
-      <SplitLines as={as} id={id} lines={styledLines} className={cn("uppercase", sizes[size])} />
+      <SplitLines
+        as={as}
+        id={id}
+        lines={styledLines}
+        className={cn("uppercase min-w-0 max-w-full pe-[0.22em]", sizes[size])}
+      />
     </div>
   );
 }

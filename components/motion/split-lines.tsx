@@ -76,11 +76,15 @@ export function SplitLines({
         return (
           <span
             key={`${item.text}-${index}`}
-            className="-mb-[0.14em] block overflow-hidden pb-[0.14em]"
+            className="-mb-[0.08em] -mx-[0.28em] block px-[0.28em] pt-[0.16em] pb-[0.3em] [clip-path:inset(0_-0.5em)]"
           >
             <motion.span
               variants={lineVariants}
-              className={cn("block", lineClassName, item.className)}
+              className={cn(
+                "inline-block w-max max-w-full pe-[0.22em]",
+                lineClassName,
+                item.className,
+              )}
             >
               {item.text}
             </motion.span>

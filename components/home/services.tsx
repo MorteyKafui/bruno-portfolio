@@ -15,7 +15,7 @@ export function Services({ locale }: { locale: Locale }) {
     <Section id={sectionIds.services} theme="ivory" aria-labelledby="services-heading">
       <div className="container-editorial">
         <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-6">
+          <div className="min-w-0 lg:col-span-7">
             <SectionHeading
               id="services-heading"
               index={services.index}
@@ -23,7 +23,7 @@ export function Services({ locale }: { locale: Locale }) {
               lines={t(services.lines)}
             />
           </div>
-          <Reveal className="lg:col-span-5 lg:col-start-8 lg:pt-24">
+          <Reveal className="lg:col-span-4 lg:col-start-9 lg:pt-24">
             <p className="text-lead text-muted-foreground">{t(services.body)}</p>
           </Reveal>
         </div>

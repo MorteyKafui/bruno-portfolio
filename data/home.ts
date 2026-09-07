@@ -283,7 +283,7 @@ export const services = {
   index: "05",
   eyebrow: { en: "Consultancy", fr: "Conseil", es: "Consultoría", pt: "Consultoria", ar: "الاستشارة" },
   lines: {
-    en: ["Expertise you", "can call on."],
+    en: ["Expertise", "you can call on."],
     fr: ["Une expertise", "à appeler."],
     es: ["Una pericia", "a la que acudir."],
     pt: ["Uma perícia", "a que pode recorrer."],
