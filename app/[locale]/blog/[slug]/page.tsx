@@ -4,6 +4,7 @@ import { hasLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { ArticleBody } from "@/components/blog/article-body";
+import { ArticleReactions } from "@/components/blog/article-reactions";
 import { ArticleToc } from "@/components/blog/article-toc";
 import { DisplayHeading } from "@/components/editorial/display-heading";
 import { Eyebrow } from "@/components/editorial/eyebrow";
@@ -76,6 +77,7 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
               <div className="mt-12">
                 <ArticleBody source={post.body} />
               </div>
+              <ArticleReactions slug={post.slug} initialClaps={0} initialLoves={0} />
               <p className="mt-16">
                 <Link
                   href="/blog"

@@ -28,10 +28,10 @@ export function Section({
 }: SectionProps) {
   return (
     <section
-      data-theme={theme === "dark" || theme === "teal" ? "dark" : "light"}
+      data-theme={theme === "dark" || theme === "teal" ? "dark" : undefined}
       data-tone={theme}
       className={cn(
-        "relative isolate overflow-hidden transition-[background-color,color] duration-500 ease-(--ease-editorial)",
+        "relative isolate overflow-hidden [content-visibility:auto] [contain-intrinsic-size:auto_720px]",
         themes[theme],
         padded && "py-24 md:py-32 lg:py-40",
         className,

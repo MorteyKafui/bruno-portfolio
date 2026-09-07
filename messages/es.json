@@ -1,0 +1,92 @@
+{
+  "Metadata": {
+    "defaultTitle": "{name}: {title}",
+    "homeTitle": "{name}, {title}, {university}",
+    "siteName": "{name}"
+  },
+  "Common": {
+    "skipToContent": "Saltar al contenido",
+    "close": "Cerrar",
+    "menu": "Menú"
+  },
+  "Nav": {
+    "label": "Principal",
+    "about": "Acerca de",
+    "research": "Investigación",
+    "services": "Servicios",
+    "contact": "Contacto",
+    "blog": "Blog"
+  },
+  "Header": {
+    "home": "{name}, inicio",
+    "downloadCv": "Descargar CV",
+    "menuDescription": "Navegación, idioma y pantalla para {name}"
+  },
+  "Footer": {
+    "explore": "Explorar",
+    "connect": "Contacto",
+    "language": "Idioma",
+    "download": "Descargar",
+    "backToTop": "Volver arriba",
+    "rights": "Todos los derechos reservados.",
+    "cv": "Currículum vitae (PDF)"
+  },
+  "Language": {
+    "label": "Idioma",
+    "change": "Cambiar idioma, actual: {language}",
+    "comingSoon": "Pronto"
+  },
+  "Theme": {
+    "toggle": "Cambiar entre modo claro y oscuro",
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+  "Cookie": {
+    "title": "Una nota sobre las cookies",
+    "body": "Este sitio guarda su idioma y sus preferencias de pantalla para recibirle igual la próxima vez. Sin rastreo ni publicidad.",
+    "accept": "Aceptar",
+    "decline": "Rechazar"
+  },
+  "Hero": {
+    "portraitAlt": "Retrato de {name}, físico médico y docente"
+  },
+  "Sections": {
+    "revealEmail": "Mostrar dirección de correo",
+    "emailLabel": "Correo",
+    "locationLabel": "Reside en",
+    "topics": "Temas de {title}",
+    "compareLabel": "Comparar la imagen de RM con el CT sintético",
+    "mri": "RM",
+    "syntheticCt": "CT sintético",
+    "dragHint": "Arrastre para comparar",
+    "illustrative": "Render ilustrativo, no son datos de pacientes"
+  },
+  "Blog": {
+    "eyebrow": "Notas",
+    "title": "Notas del laboratorio y del aula.",
+    "lead": "Ensayos breves sobre física médica, imagen, radioprotección y docencia. Hay tres notas de muestra para valorar la lectura. Sustitúyalas por textos del Dr. Acquah.",
+    "empty": "Los primeros ensayos aparecerán aquí.",
+    "fallback": "Este artículo aún no está en este idioma. Se muestra la versión original en inglés.",
+    "read": "Leer",
+    "published": "Publicado",
+    "onThisPage": "En esta página",
+    "sample": "Muestra",
+    "appreciate": "¿Le resultó útil?",
+    "clap": "Aplaudir",
+    "love": "Me gusta"
+  },
+  "NotFound": {
+    "eyebrow": "404",
+    "title": "Esta página no está aquí.",
+    "body": "La dirección pudo haber cambiado o nunca existió. El inicio es el mejor lugar para continuar.",
+    "back": "Volver al inicio",
+    "blog": "Leer las notas"
+  },
+  "Error": {
+    "eyebrow": "Algo salió mal",
+    "title": "Esta página no pudo terminar de cargar.",
+    "body": "Un fallo temporal detuvo la página. Inténtelo de nuevo o vuelva al inicio.",
+    "retry": "Intentar de nuevo",
+    "back": "Volver al inicio"
+  }
+}

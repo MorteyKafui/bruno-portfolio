@@ -48,7 +48,6 @@
     "decline": "Decline"
   },
   "Hero": {
-    "scrollCue": "Scroll",
     "portraitAlt": "Portrait of {name}, medical physicist and lecturer"
   },
   "Sections": {
@@ -71,12 +70,23 @@
     "read": "Read",
     "published": "Published",
     "onThisPage": "On this page",
-    "sample": "Sample"
+    "sample": "Sample",
+    "appreciate": "Was this useful?",
+    "clap": "Clap",
+    "love": "Love"
   },
   "NotFound": {
     "eyebrow": "404",
     "title": "This page is not here.",
     "body": "The address may have changed or never existed. The homepage is the best place to start again.",
+    "back": "Back to the homepage",
+    "blog": "Read the notes"
+  },
+  "Error": {
+    "eyebrow": "Something went wrong",
+    "title": "This page could not finish loading.",
+    "body": "A temporary fault stopped the page. Try again, or return to the homepage.",
+    "retry": "Try again",
     "back": "Back to the homepage"
   }
 }

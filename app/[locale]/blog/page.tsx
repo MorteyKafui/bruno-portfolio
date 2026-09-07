@@ -35,7 +35,7 @@ export default async function BlogIndex({ params }: BlogIndexProps) {
   return (
     <DirectionalTransition>
       <main id="main" className="flex-1">
-        <section data-theme="light" className="bg-background pt-32 pb-24 text-foreground md:pt-40">
+        <section className="bg-background pt-32 pb-24 text-foreground md:pt-40">
           <div className="container-editorial">
             <Eyebrow className="text-accent">{t("eyebrow")}</Eyebrow>
             <DisplayHeading as="h1" size="lg" className="mt-8 max-w-5xl">
@@ -45,7 +45,7 @@ export default async function BlogIndex({ params }: BlogIndexProps) {
           </div>
         </section>
 
-        <section data-theme="light" className="border-t border-border bg-card pb-32 text-card-foreground">
+        <section className="border-t border-border bg-card pb-32 text-card-foreground">
           <div className="container-editorial">
             {posts.length === 0 ? (
               <p className="max-w-md py-20 text-[0.9375rem] leading-relaxed text-muted-foreground">

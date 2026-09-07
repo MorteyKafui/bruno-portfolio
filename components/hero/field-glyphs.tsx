@@ -1,10 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { GlyphMatrix } from "@/components/ui/glyph-matrix";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
-/** Dose, imaging, and cellular tokens used in medical physics. */
 const MEDICAL_GLYPHS = [
   "α",
   "β",
@@ -39,20 +39,33 @@ const MEDICAL_GLYPHS = [
   "e⁻",
 ] as const;
 
+/**
+ * Desktop-only atmosphere. Mobile skips the canvas so the hero stays light.
+ */
 export function FieldGlyphs() {
   const { resolvedTheme } = useTheme();
   const reduce = usePrefersReducedMotion();
-  const color = resolvedTheme === "dark" ? "#4FA3A5" : "#145C63";
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 1024px)");
+    const sync = () => setEnabled(media.matches && !reduce);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, [reduce]);
+
+  if (!enabled) return null;
 
   return (
     <GlyphMatrix
       glyphs={MEDICAL_GLYPHS}
-      cellSize={16}
-      mutationRate={reduce ? 0 : 0.035}
-      interval={reduce ? 10_000 : 110}
+      cellSize={18}
+      mutationRate={0.02}
+      interval={160}
       fadeBottom={0.72}
-      color={color}
-      className="absolute inset-0 opacity-40 dark:opacity-30"
+      color={resolvedTheme === "dark" ? "oklch(0.748 0.132 128)" : "oklch(0.452 0.108 128)"}
+      className="absolute inset-0 opacity-35 dark:opacity-25"
     />
   );
 }

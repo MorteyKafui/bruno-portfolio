@@ -77,7 +77,7 @@ export function GlyphMatrix({
     const pickGlyph = () => alphabet[Math.floor(Math.random() * alphabet.length)] ?? ""
 
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25)
       const { clientWidth: w, clientHeight: h } = canvas
 
       canvas.width = w * dpr
@@ -135,7 +135,21 @@ export function GlyphMatrix({
 
     resize()
     draw()
-    raf = requestAnimationFrame(tick)
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return
+        if (entry.isIntersecting && mutationRate > 0) {
+          stopped = false
+          raf = requestAnimationFrame(tick)
+        } else {
+          stopped = true
+          cancelAnimationFrame(raf)
+        }
+      },
+      { rootMargin: "80px" },
+    )
+    io.observe(canvas)
 
     const ro = new ResizeObserver(() => {
       resize()
@@ -146,6 +160,7 @@ export function GlyphMatrix({
     return () => {
       stopped = true
       cancelAnimationFrame(raf)
+      io.disconnect()
       ro.disconnect()
     }
   }, [glyphs, cellSize, mutationRate, interval, fadeBottom])

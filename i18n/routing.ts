@@ -7,7 +7,7 @@ export const routing = defineRouting({
   // The locale is always part of the URL so server and client agree on it and
   // every page has a unique, indexable address per language.
   localePrefix: "always",
-  // Detection order handled by the proxy: URL prefix, this cookie, then
-  // Accept-Language, then the default locale. Never IP or geography.
+  localeDetection: true,
+  // URL prefix, remembered cookie, then Accept-Language, then English.
   localeCookie: { maxAge: LOCALE_COOKIE_MAX_AGE },
 });

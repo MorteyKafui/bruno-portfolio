@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# runtime clap/love totals (written on the server when the filesystem allows)
+/data/reactions.json

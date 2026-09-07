@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
@@ -12,13 +13,19 @@ interface ThemeToggleProps {
 }
 
 /**
- * Circle-from-center theme reveal (Magic UI view-transition clip), wired to
- * next-themes and the synthesized switch click.
+ * Circle-from-center theme reveal. The server and the first client paint both
+ * assume dark so the icon does not mismatch during hydration.
  */
 export function ThemeToggle({ className, withLabel = false }: ThemeToggleProps) {
   const { resolvedTheme, setTheme } = useTheme();
   const t = useTranslations("Theme");
-  const theme = resolvedTheme === "dark" ? "dark" : "light";
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const theme = mounted && resolvedTheme === "light" ? "light" : "dark";
 
   return (
     <span className={cn("inline-flex items-center", withLabel && "gap-3")}>

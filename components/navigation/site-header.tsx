@@ -20,13 +20,15 @@ type HeaderState = `${"top" | "scrolled"}|${SurfaceTheme}`;
 
 /** Theme of the section currently sitting under the header bar. */
 function readSurfaceTheme(): SurfaceTheme {
+  const documentDark = document.documentElement.classList.contains("dark");
   const hits = document.elementsFromPoint(window.innerWidth / 2, 40);
   for (const el of hits) {
     if (el.closest("header")) continue;
     const surface = el.closest<HTMLElement>("[data-theme]");
-    if (surface) return surface.dataset.theme === "dark" ? "dark" : "light";
+    if (surface?.dataset.theme === "dark") return "dark";
+    if (surface?.dataset.theme === "light") return documentDark ? "dark" : "light";
   }
-  return "light";
+  return documentDark ? "dark" : "light";
 }
 
 function subscribeToViewport(onChange: () => void) {

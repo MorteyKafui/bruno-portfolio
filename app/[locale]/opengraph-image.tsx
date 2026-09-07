@@ -29,10 +29,10 @@ async function loadDisplayFont() {
 }
 
 const palette = {
-  ivory: "#f7f5f0",
-  ink: "#111315",
-  graphite: "#555b60",
-  teal: "#145c63",
+  ivory: "#F2E8DC",
+  ink: "#3B2F24",
+  graphite: "#AD9E8F",
+  teal: "#8FC058",
 };
 
 export default async function OpenGraphImage({

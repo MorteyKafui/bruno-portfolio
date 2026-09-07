@@ -32,11 +32,14 @@ const containers = {
 };
 
 const lineVariants: Variants = {
-  hidden: { y: "112%", opacity: 0 },
+  hidden: { y: "108%", opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
-    transition: { duration: 1, ease: editorialEase },
+    transition: {
+      y: { type: "spring", stiffness: 140, damping: 18, mass: 0.65 },
+      opacity: { duration: 0.4, ease: editorialEase },
+    },
   },
 };
 
@@ -77,7 +80,7 @@ export function SplitLines({
           >
             <motion.span
               variants={lineVariants}
-              className={cn("block will-change-transform", lineClassName, item.className)}
+              className={cn("block", lineClassName, item.className)}
             >
               {item.text}
             </motion.span>

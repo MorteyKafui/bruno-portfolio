@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Fraunces, Spline_Sans } from "next/font/google";
+import { Fraunces, Noto_Naskh_Arabic, Noto_Sans_Arabic, Spline_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
+import Script from "next/script";
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import { CookieBanner } from "@/components/consent/cookie-banner";
@@ -21,14 +22,32 @@ const spline = Spline_Sans({
   subsets: ["latin", "latin-ext"],
   variable: "--font-spline",
   display: "swap",
+  weight: ["400", "500", "600"],
 });
 
 const fraunces = Fraunces({
   subsets: ["latin", "latin-ext"],
   variable: "--font-fraunces",
   display: "swap",
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
 });
+
+const notoSansArabic = Noto_Sans_Arabic({
+  subsets: ["arabic"],
+  variable: "--font-noto-sans-arabic",
+  display: "swap",
+  weight: ["400", "500", "600"],
+});
+
+const notoNaskhArabic = Noto_Naskh_Arabic({
+  subsets: ["arabic"],
+  variable: "--font-noto-naskh",
+  display: "swap",
+  weight: ["400", "500", "600"],
+});
+
+const THEME_INIT = `(function(){try{var t=localStorage.getItem("ika-theme");if(t==="light")document.documentElement.classList.remove("dark");else document.documentElement.classList.add("dark");}catch(e){document.documentElement.classList.add("dark");}})();`;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -96,6 +115,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   const t = await getTranslations({ locale, namespace: "Common" });
+  const arabic = locale === "ar";
 
   return (
     <html
@@ -103,8 +123,17 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
       dir={getDirection(locale)}
       suppressHydrationWarning
       data-scroll-behavior="smooth"
-      className={cn("h-full antialiased", spline.variable, fraunces.variable)}
+      className={cn(
+        "dark h-full antialiased",
+        spline.variable,
+        fraunces.variable,
+        arabic && notoSansArabic.variable,
+        arabic && notoNaskhArabic.variable,
+      )}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
+      </head>
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
           <NextIntlClientProvider>
@@ -122,8 +151,10 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
             <CookieBanner />
           </NextIntlClientProvider>
         </ThemeProvider>
-        <script
+        <Script
+          id="person-jsonld"
           type="application/ld+json"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{ __html: personJsonLd(locale) }}
         />
       </body>
