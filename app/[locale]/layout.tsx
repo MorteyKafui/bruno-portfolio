@@ -29,7 +29,7 @@ const fraunces = Fraunces({
   subsets: ["latin", "latin-ext"],
   variable: "--font-fraunces",
   display: "swap",
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
 });
 
@@ -44,10 +44,8 @@ const notoNaskhArabic = Noto_Naskh_Arabic({
   subsets: ["arabic"],
   variable: "--font-noto-naskh",
   display: "swap",
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
-
-const THEME_INIT = `(function(){try{var t=localStorage.getItem("ika-theme");if(t==="light")document.documentElement.classList.remove("dark");else document.documentElement.classList.add("dark");}catch(e){document.documentElement.classList.add("dark");}})();`;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -131,9 +129,6 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         arabic && notoNaskhArabic.variable,
       )}
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
-      </head>
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
           <NextIntlClientProvider>
