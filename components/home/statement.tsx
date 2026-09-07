@@ -14,7 +14,6 @@ export function Statement() {
             index={statement.index}
             eyebrow={statement.eyebrow}
             lines={statement.lines}
-            headingClassName="[&>span:last-child]:italic [&>span:last-child]:lowercase [&>span:last-child]:text-teal"
           />
         </div>
 

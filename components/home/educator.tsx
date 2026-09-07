@@ -33,7 +33,7 @@ export function Educator() {
             index={educator.index}
             eyebrow={educator.eyebrow}
             lines={educator.lines}
-            headingClassName="[&>span:nth-child(2)]:italic [&>span:nth-child(2)]:lowercase [&>span:nth-child(2)]:text-teal"
+            accent={1}
           />
 
           <Reveal delay={0.15} className="mt-12">

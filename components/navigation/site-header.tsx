@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useMotionValueEvent, useScroll } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -14,21 +14,44 @@ interface SiteHeaderProps {
   descriptor: string;
 }
 
+type SurfaceTheme = "light" | "dark";
+
+/** Theme of the section currently sitting under the header bar. */
+function readSurfaceTheme(): SurfaceTheme {
+  const probeY = 40;
+  const hits = document.elementsFromPoint(window.innerWidth / 2, probeY);
+  for (const el of hits) {
+    if (el.closest("header")) continue;
+    const surface = el.closest<HTMLElement>("[data-theme]");
+    if (surface) return surface.dataset.theme === "dark" ? "dark" : "light";
+  }
+  return "light";
+}
+
 export function SiteHeader({ name, items, descriptor }: SiteHeaderProps) {
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
+  const [surface, setSurface] = useState<SurfaceTheme>("light");
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
+  const sync = useCallback((latest: number) => {
     setScrolled(latest > 24);
-  });
+    setSurface(readSurfaceTheme());
+  }, []);
+
+  useMotionValueEvent(scrollY, "change", sync);
+  useEffect(() => {
+    sync(window.scrollY);
+  }, [sync]);
 
   return (
     <header
       data-scrolled={scrolled || undefined}
+      data-surface={surface}
       className={cn(
-        "fixed inset-x-0 top-0 z-40 border-b transition-[background-color,border-color,box-shadow] duration-500 ease-(--ease-editorial)",
+        "fixed inset-x-0 top-0 z-40 border-b text-foreground transition-[background-color,border-color,color] duration-500 ease-(--ease-editorial)",
+        surface === "dark" && "dark",
         scrolled
-          ? "border-ink/10 bg-ivory/85 shadow-[0_1px_0_0_rgb(17_19_21/0.04)] backdrop-blur-md supports-backdrop-filter:bg-ivory/70"
+          ? "border-foreground/10 bg-background/85 backdrop-blur-md supports-backdrop-filter:bg-background/70"
           : "border-transparent bg-transparent",
       )}
     >
@@ -46,12 +69,12 @@ export function SiteHeader({ name, items, descriptor }: SiteHeaderProps) {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className="group relative py-2 text-[0.8125rem] font-medium tracking-tight text-graphite transition-colors duration-300 hover:text-ink"
+                className="group relative py-2 text-[0.8125rem] font-medium tracking-tight text-muted-foreground transition-colors duration-300 hover:text-foreground"
               >
                 {item.label}
                 <span
                   aria-hidden
-                  className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-teal transition-transform duration-400 ease-(--ease-editorial) group-hover:scale-x-100"
+                  className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-accent transition-transform duration-400 ease-(--ease-editorial) group-hover:scale-x-100"
                 />
               </Link>
             </li>

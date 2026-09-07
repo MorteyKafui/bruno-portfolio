@@ -16,7 +16,6 @@ export function Impact() {
               index={impact.index}
               eyebrow={impact.eyebrow}
               lines={impact.lines}
-              headingClassName="[&>span:last-child]:italic [&>span:last-child]:lowercase [&>span:last-child]:text-teal"
             />
           </div>
         </div>

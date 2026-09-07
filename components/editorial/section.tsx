@@ -23,6 +23,7 @@ export function Section({
 }: SectionProps) {
   return (
     <section
+      data-theme={theme === "dark" || theme === "teal" ? "dark" : "light"}
       className={cn(
         "relative isolate overflow-hidden",
         themes[theme],

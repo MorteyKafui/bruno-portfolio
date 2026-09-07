@@ -29,8 +29,7 @@ export function Connection() {
             eyebrow={connection.eyebrow}
             lines={connection.lines}
             size="xl"
-            className="[&_span.text-eyebrow]:text-cool-gray"
-            headingClassName="[&>span:last-child]:italic [&>span:last-child]:lowercase [&>span:last-child]:text-teal-bright"
+            eyebrowClassName="text-cool-gray"
           />
         </div>
 

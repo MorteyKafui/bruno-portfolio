@@ -51,12 +51,13 @@ export function Hero({
   const displayLines = lines.map((line) => ({
     text: line.text,
     className:
-      line.style === "caps" ? "uppercase" : "lowercase italic text-teal",
+      line.style === "caps" ? "uppercase" : "italic text-teal",
   }));
 
   return (
     <section
       aria-labelledby="hero-heading"
+      data-theme="light"
       className="relative isolate flex min-h-svh flex-col overflow-hidden bg-ivory pt-24 text-ink md:pt-28"
     >
       <motion.div

@@ -22,7 +22,6 @@ export function ResearchAreas() {
               index={research.index}
               eyebrow={research.eyebrow}
               lines={research.lines}
-              headingClassName="[&>span:last-child]:italic [&>span:last-child]:lowercase [&>span:last-child]:text-teal-bright"
             />
           </div>
           <Reveal className="lg:col-span-4 lg:col-start-9">

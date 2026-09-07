@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DisplayHeading } from "@/components/editorial/display-heading";
 import { Wordmark } from "@/components/navigation/wordmark";
 import { primaryNavigation } from "@/data/navigation";
 import { footer } from "@/data/home";
@@ -8,13 +9,13 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="dark bg-ink text-ivory">
+    <footer data-theme="dark" className="dark bg-ink text-ivory">
       <div className="container-editorial grid gap-12 py-20 md:grid-cols-12 md:py-24">
         <div className="flex flex-col gap-6 md:col-span-6">
-          <p className="font-display text-display-md leading-none">
+          <DisplayHeading as="p" size="md">
             {professor.name}
             <span className="text-teal-bright">.</span>
-          </p>
+          </DisplayHeading>
           <p className="max-w-sm text-sm leading-relaxed text-cool-gray">
             {footer.descriptor}
           </p>

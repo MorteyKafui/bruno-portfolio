@@ -2,7 +2,7 @@ import type { Link } from "@/types/content";
 
 export interface DisplayLine {
   text: string;
-  /** `caps` renders uppercase roman; `italic` renders lowercase italic. */
+  /** `caps` renders uppercase roman; `italic` renders the text as written, in italic. */
   style: "caps" | "italic";
 }
 
