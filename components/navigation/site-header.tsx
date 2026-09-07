@@ -67,6 +67,7 @@ export function SiteHeader() {
     <header
       data-scrolled={scrolled || undefined}
       data-surface={surface}
+      style={{ viewTransitionName: "site-header" }}
       className={cn(
         "fixed inset-x-0 top-0 z-50 mx-auto w-full border text-foreground transition-[max-width,background-color,border-color,color,box-shadow,top,border-radius] duration-500 ease-(--ease-editorial)",
         surface === "dark" && "dark",
@@ -82,7 +83,7 @@ export function SiteHeader() {
           scrolled ? "h-14 px-4 md:ps-6 md:pe-3" : "container-editorial h-20 md:h-24",
         )}
       >
-        <Wordmark />
+        <Wordmark transitionTypes={pathname.startsWith("/blog") ? ["nav-back"] : undefined} />
 
         <ul
           className="hidden items-center lg:flex"
@@ -94,6 +95,7 @@ export function SiteHeader() {
               <li key={item.key} className="relative">
                 <Link
                   href={navHref(item)}
+                  transitionTypes={item.key === "blog" ? ["nav-forward"] : undefined}
                   onPointerEnter={() => setHovered(item.key)}
                   onFocus={() => setHovered(item.key)}
                   onBlur={() => setHovered(null)}

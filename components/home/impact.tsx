@@ -19,7 +19,7 @@ export function Impact({ locale }: { locale: Locale }) {
           alt={t(impact.image.alt)}
           sizes="(min-width: 1024px) 50vw, 100vw"
           amount={6}
-          className="aspect-[4/5] sm:aspect-[16/10] lg:col-span-6 lg:aspect-auto lg:min-h-svh"
+          className="clip-graduation aspect-[4/5] sm:aspect-[16/10] lg:col-span-6 lg:aspect-auto lg:min-h-svh"
         />
 
         <div className="flex flex-col justify-center py-24 lg:col-span-5 lg:col-start-8 lg:py-32">

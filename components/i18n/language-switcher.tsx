@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
@@ -94,7 +95,11 @@ export function LanguageSwitcher({ variant = "dropdown", className }: LanguageSw
         <ChevronDown aria-hidden className="size-3.5 text-muted-foreground" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" sideOffset={10} className="min-w-52 rounded-md p-1.5">
-        <DropdownMenuLabel className="text-eyebrow px-2.5 pt-2 pb-2">{t("label")}</DropdownMenuLabel>
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="text-eyebrow px-2.5 pt-2 pb-2">
+            {t("label")}
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
         <DropdownMenuRadioGroup value={locale} onValueChange={(value) => switchTo(String(value))}>
           {enabled.map((code) => (
             <DropdownMenuRadioItem
@@ -109,16 +114,18 @@ export function LanguageSwitcher({ variant = "dropdown", className }: LanguageSw
         {planned.length > 0 && (
           <>
             <DropdownMenuSeparator className="my-1.5" />
-            {planned.map((code) => (
-              <DropdownMenuItem
-                key={code}
-                disabled
-                className="justify-between rounded-sm py-2.5 ps-2.5 pe-2.5 text-sm"
-              >
-                <span lang={code}>{localeRegistry[code].nativeLabel}</span>
-                <span className="text-eyebrow text-muted-foreground">{t("comingSoon")}</span>
-              </DropdownMenuItem>
-            ))}
+            <DropdownMenuGroup>
+              {planned.map((code) => (
+                <DropdownMenuItem
+                  key={code}
+                  disabled
+                  className="justify-between rounded-sm py-2.5 ps-2.5 pe-2.5 text-sm"
+                >
+                  <span lang={code}>{localeRegistry[code].nativeLabel}</span>
+                  <span className="text-eyebrow text-muted-foreground">{t("comingSoon")}</span>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuGroup>
           </>
         )}
       </DropdownMenuContent>

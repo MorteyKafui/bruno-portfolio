@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Inter } from "next/font/google";
+import { Fraunces, Spline_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
@@ -17,18 +17,17 @@ import { localize } from "@/i18n/localized";
 import { routing } from "@/i18n/routing";
 import { absoluteUrl, ogLocales, siteUrl } from "@/lib/seo";
 
-const inter = Inter({
+const spline = Spline_Sans({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-inter",
+  variable: "--font-spline",
   display: "swap",
 });
 
-const dmSerif = DM_Serif_Display({
-  weight: "400",
-  style: ["normal", "italic"],
+const fraunces = Fraunces({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-dm-serif",
+  variable: "--font-fraunces",
   display: "swap",
+  style: ["normal", "italic"],
 });
 
 export function generateStaticParams() {
@@ -103,7 +102,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
       lang={locale}
       dir={getDirection(locale)}
       suppressHydrationWarning
-      className={cn("h-full antialiased", inter.variable, dmSerif.variable)}
+      data-scroll-behavior="smooth"
+      className={cn("h-full antialiased", spline.variable, fraunces.variable)}
     >
       <body className="flex min-h-full flex-col">
         <ThemeProvider>

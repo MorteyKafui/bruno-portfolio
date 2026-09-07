@@ -59,7 +59,7 @@ export function MobileMenu() {
         </SheetDescription>
 
         <div className="container-editorial flex h-20 shrink-0 items-center justify-between">
-          <Wordmark onClick={close} />
+          <Wordmark onClick={close} transitionTypes={["nav-back"]} />
           <Button variant="ghost" size="sm" className="-me-2 text-sm" onClick={close}>
             {tCommon("close")}
           </Button>
@@ -76,6 +76,7 @@ export function MobileMenu() {
               <Link
                 href={navHref(entry)}
                 onClick={close}
+                transitionTypes={entry.key === "blog" ? ["nav-forward"] : undefined}
                 className="group flex items-baseline gap-5 border-b border-foreground/10 py-4"
               >
                 <span className="text-eyebrow w-6 tabular-nums text-muted-foreground">

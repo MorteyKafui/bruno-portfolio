@@ -13,11 +13,11 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-/** DM Serif Display for the social card; falls back to the default face offline. */
+/** Fraunces for the social card; falls back to the default face offline. */
 async function loadDisplayFont() {
   try {
     const css = await fetch(
-      "https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap",
+      "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&display=swap",
       { headers: { "User-Agent": "curl/8" } },
     ).then((r) => r.text());
     const url = css.match(/src: url\((.+?)\) format\('truetype'\)/)?.[1];
@@ -59,7 +59,7 @@ export default async function OpenGraphImage({
           padding: "72px 80px",
           background: `linear-gradient(135deg, ${palette.ivory} 0%, #ffffff 100%)`,
           color: palette.ink,
-          fontFamily: font ? "DM Serif Display" : "serif",
+          fontFamily: font ? "Fraunces" : "serif",
           position: "relative",
         }}
       >
@@ -131,7 +131,7 @@ export default async function OpenGraphImage({
     {
       ...size,
       fonts: font
-        ? [{ name: "DM Serif Display", data: font, style: "normal", weight: 400 }]
+        ? [{ name: "Fraunces", data: font, style: "normal", weight: 400 }]
         : undefined,
     },
   );

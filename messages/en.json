@@ -65,11 +65,13 @@
   "Blog": {
     "eyebrow": "Insights",
     "title": "Notes from the lab and the lecture hall.",
-    "lead": "Short essays on medical physics, imaging, radiation safety, and teaching. Articles are written in MDX and published only when the wording is ready.",
+    "lead": "Short essays on medical physics, imaging, radiation safety, and teaching. Three sample notes are here so the reading layout can be judged. Replace them with Dr Acquah's own pieces.",
     "empty": "The first essays will appear here. Nothing is drafted as a placeholder.",
     "fallback": "This article is not yet available in the selected language. The original English version is shown.",
     "read": "Read",
-    "published": "Published"
+    "published": "Published",
+    "onThisPage": "On this page",
+    "sample": "Sample"
   },
   "NotFound": {
     "eyebrow": "404",

@@ -27,6 +27,7 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
   return (
     <footer
       data-theme="dark"
+      style={{ viewTransitionName: "site-footer" }}
       className="dark relative w-full bg-background text-foreground md:h-(--footer-height) md:[--footer-height:34rem] md:[clip-path:polygon(0_0,100%_0,100%_100%,0_100%)] lg:[--footer-height:31rem]"
     >
       <div className="md:fixed md:bottom-0 md:h-(--footer-height) md:w-full">

@@ -3,6 +3,7 @@ import { hasLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Hero } from "@/components/hero/hero";
+import { DirectionalTransition } from "@/components/motion/directional-transition";
 import { Connection } from "@/components/home/connection";
 import { Educator } from "@/components/home/educator";
 import { Impact } from "@/components/home/impact";
@@ -36,6 +37,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
   if (!hasLocale(routing.locales, locale)) notFound();
 
   return (
+    <DirectionalTransition>
     <main id="main" className="flex-1">
       <Hero locale={locale} />
       <Statement locale={locale} />
@@ -46,5 +48,6 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
       <Perspective locale={locale} />
       <Connection locale={locale} />
     </main>
+    </DirectionalTransition>
   );
 }

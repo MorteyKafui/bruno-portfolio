@@ -16,7 +16,7 @@ export interface LocaleDefinition {
   /** Open Graph locale code. */
   ogLocale: string;
   /**
-   * Companion font note. Latin locales share DM Serif Display and Inter.
+   * Companion font note. Latin locales share Fraunces and Spline Sans.
    * When `ar` is enabled, map an Arabic display and body font here and load it
    * in `app/[locale]/layout.tsx` for that locale only.
    */

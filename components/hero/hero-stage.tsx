@@ -124,13 +124,14 @@ export function HeroStage({
           initial={{ opacity: 0, y: 48 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: editorialEase, delay: 0.2 }}
-          className="portrait-group relative mx-auto w-full max-w-[20rem] self-end sm:max-w-[24rem] lg:col-span-5 lg:max-w-none"
+          className="relative mx-auto w-full max-w-[20rem] self-end sm:max-w-[24rem] lg:col-span-5 lg:max-w-none"
         >
           <motion.div
             style={scrollLinked ? { scale, y } : undefined}
-            className="portrait-plate origin-bottom will-change-transform"
+            className="portrait-plate clip-portrait origin-bottom will-change-transform"
           >
             <Image
+              key={portrait.src}
               src={portrait.src}
               alt={portrait.alt}
               width={portrait.width}

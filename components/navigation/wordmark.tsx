@@ -8,13 +8,14 @@ import { cn } from "@/lib/utils";
 interface WordmarkProps {
   className?: string;
   onClick?: () => void;
+  transitionTypes?: string[];
 }
 
 /**
  * "I.K. Acquah" in the display serif. The initials' periods take the accent
  * colour, a quiet signature detail that reads at any size.
  */
-export function Wordmark({ className, onClick }: WordmarkProps) {
+export function Wordmark({ className, onClick, transitionTypes }: WordmarkProps) {
   const t = useTranslations("Header");
   const parts = professor.shortName.split(".");
 
@@ -22,6 +23,7 @@ export function Wordmark({ className, onClick }: WordmarkProps) {
     <Link
       href="/"
       onClick={onClick}
+      transitionTypes={transitionTypes}
       aria-label={t("home", { name: professor.fullName })}
       className={cn(
         "font-display text-[1.375rem] leading-none tracking-tight whitespace-nowrap text-foreground",
