@@ -1,7 +1,7 @@
 # Feature: Personal brand homepage
 
 **From build-plan:** feature 1
-**Status:** not started
+**Status:** implemented and verified, awaiting review before `/complete`
 **Branch:** `feature/personal-brand-homepage`
 
 ## Goal
@@ -88,43 +88,43 @@ split any diff that is too large to review.
 
 ## Build steps
 
-- [ ] **Step 1 - Design foundation** - swap fonts to DM Serif Display + Inter,
+- [x] **Step 1 - Design foundation** - swap fonts to DM Serif Display + Inter,
   rewrite `globals.css` tokens to the project palette (light root, `.dark`
   section theme, Tailwind color aliases, display type scale utilities), set
   metadata, add `MotionConfig` provider, add shadcn `Button` and `Sheet`.
   *Done when:* `/` renders on ivory with the serif display font visible,
   `bunx tsc --noEmit` and `bun run lint` pass, `components/ui/button.tsx` and
   `sheet.tsx` exist.
-- [ ] **Step 2 - Structured content** - add `types/content.ts` (`Image`,
+- [x] **Step 2 - Structured content** - add `types/content.ts` (`Image`,
   `Link`, `NavItem`), `data/professor.ts`, `data/research.ts`,
   `data/navigation.ts`, `data/home.ts` with clearly marked
   `// TODO(content):` placeholders and no invented facts. *Done when:*
   typecheck passes and every string later rendered on the homepage traces to
   a data module.
-- [ ] **Step 3 - Motion and editorial primitives** - `Reveal`, `SplitLines`,
+- [x] **Step 3 - Motion and editorial primitives** - `Reveal`, `SplitLines`,
   `ParallaxImage`, `Section`, `Eyebrow`, `DisplayHeading`, `SectionHeading`.
   *Done when:* a section using them renders, animations play on scroll in a
   browser, and with reduced motion emulated the content is fully visible
   without transforms.
-- [ ] **Step 4 - Navigation** - `SiteHeader` (sticky, transparent over hero,
+- [x] **Step 4 - Navigation** - `SiteHeader` (sticky, transparent over hero,
   border and blur after ~24px scroll) and `MobileMenu` (full-screen Sheet,
   staggered links, close on link click). *Done when:* header stays fixed while
   scrolling, style changes after scroll, menu opens from the button, traps
   focus, closes on Escape and on link selection, and no nested anchors exist.
-- [ ] **Step 5 - Hero** - portrait with `next/image` (`priority`, responsive
+- [x] **Step 5 - Hero** - portrait with `next/image` (`priority`, responsive
   `sizes`), eyebrow, role line, four-line display statement via `SplitLines`,
   lead, CTAs, scroll cue, entrance sequence, scroll-linked portrait scale.
   *Done when:* the sequence plays in order on load, the portrait scales
   subtly on scroll on desktop and not on mobile, CTAs reach `#research` and
   `#connect`, and the hero fills the viewport at 1440 and reads cleanly at 390.
-- [ ] **Step 6 - Homepage acts and footer** - Statement, Research, Impact,
+- [x] **Step 6 - Homepage acts and footer** - Statement, Research, Impact,
   Educator, Perspective, Connection sections plus `SiteFooter`, composed in
   `app/page.tsx` as server components with client islands. *Done when:* all
   six acts render from data in order with alternating light/dark/image
   rhythm, each has an `id` matching navigation, hover reveals work in the
   research list, the impact connector draws on scroll, and the footer links
   resolve.
-- [ ] **Step 7 - Responsive, accessibility, and verification pass** - check
+- [x] **Step 7 - Responsive, accessibility, and verification pass** - check
   390/820/1440 layouts, keyboard path (skip link, header, menu, CTAs), focus
   visibility, alt text, heading order, reduced motion, console cleanliness.
   Run lint, typecheck, and `bun run build`. *Done when:* all three commands
@@ -180,6 +180,27 @@ split any diff that is too large to review.
   1440; reduced-motion emulation; keyboard-only pass through header, menu,
   CTAs; console and hydration warnings watched in the dev overlay.
 - Final gate: `bun run lint`, `bunx tsc --noEmit`, `bun run build`.
+
+## Verification record (2026-09-07)
+
+- `bun run lint`, `bunx tsc --noEmit`, `bun run build` all pass; `/` and
+  `/_not-found` prerender as static.
+- Production build served on `:3001` and driven headlessly through CDP at
+  1440x900 and 390x844: no console messages, no exceptions, no horizontal
+  overflow at either width.
+- Header: transparent at top; tinted, blurred chrome after 24px; surface
+  detection flips to dark chrome over `#research`, `#perspective`, `#connect`
+  and the footer, back to light over `#about`, `#impact`, `#teaching`.
+  State now comes from `useSyncExternalStore` with a server snapshot, so there
+  is no setState-in-effect and no hydration branch.
+- Reduced motion: `MotionConfig reducedMotion="user"` plus the SSR-safe
+  `usePrefersReducedMotion` hook; hero scale and parallax disabled, content
+  fully visible, no hydration mismatch under forced `prefers-reduced-motion`.
+- Mobile menu: opens from the button, focus trapped, Escape and link click
+  close it; no nested anchors anywhere on the page.
+- Open items carried to later features: real portrait and graduation
+  photography, professor facts marked `TODO(content)`, hrefs move from
+  `/#section` anchors to routes as each page ships.
 
 ## Notes for the AI
 

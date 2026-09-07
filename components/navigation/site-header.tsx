@@ -1,8 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
-import { useMotionValueEvent, useScroll } from "motion/react";
 import { cn } from "@/lib/utils";
 import type { NavItem } from "@/types/content";
 import { MobileMenu } from "./mobile-menu";
@@ -28,20 +27,29 @@ function readSurfaceTheme(): SurfaceTheme {
   return "light";
 }
 
+type HeaderState = `${"top" | "scrolled"}|${SurfaceTheme}`;
+
+function subscribeToViewport(onChange: () => void) {
+  window.addEventListener("scroll", onChange, { passive: true });
+  window.addEventListener("resize", onChange);
+  return () => {
+    window.removeEventListener("scroll", onChange);
+    window.removeEventListener("resize", onChange);
+  };
+}
+
+function readHeaderState(): HeaderState {
+  return `${window.scrollY > 24 ? "scrolled" : "top"}|${readSurfaceTheme()}`;
+}
+
 export function SiteHeader({ name, items, descriptor }: SiteHeaderProps) {
-  const { scrollY } = useScroll();
-  const [scrolled, setScrolled] = useState(false);
-  const [surface, setSurface] = useState<SurfaceTheme>("light");
-
-  const sync = useCallback((latest: number) => {
-    setScrolled(latest > 24);
-    setSurface(readSurfaceTheme());
-  }, []);
-
-  useMotionValueEvent(scrollY, "change", sync);
-  useEffect(() => {
-    sync(window.scrollY);
-  }, [sync]);
+  const state = useSyncExternalStore(
+    subscribeToViewport,
+    readHeaderState,
+    (): HeaderState => "top|light",
+  );
+  const [position, surface] = state.split("|") as ["top" | "scrolled", SurfaceTheme];
+  const scrolled = position === "scrolled";
 
   return (
     <header
