@@ -3,12 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown } from "lucide-react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/editorial/eyebrow";
 import { SplitLines } from "@/components/motion/split-lines";
 import { editorialEase } from "@/components/motion/reveal";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import type { DisplayLine } from "@/data/home";
 import type { Image as ImageData, Link as LinkData } from "@/types/content";
 import { HeroBackdrop } from "./hero-backdrop";
@@ -40,7 +41,7 @@ export function Hero({
   scrollCue,
   portrait,
 }: HeroProps) {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const { scrollY } = useScroll();
   const scale = useTransform(scrollY, [0, 700], [1, 1.07]);

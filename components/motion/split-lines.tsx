@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { motion, type Variants } from "motion/react";
 import { cn } from "@/lib/utils";
 import { editorialEase } from "./reveal";
 
@@ -50,7 +50,6 @@ export function SplitLines({
   stagger = 0.09,
   trigger = "inView",
 }: SplitLinesProps) {
-  const reduce = useReducedMotion();
   const Container = containers[as];
   const containerVariants: Variants = {
     hidden: {},
@@ -65,7 +64,7 @@ export function SplitLines({
     <Container
       id={id}
       className={className}
-      initial={reduce ? "visible" : "hidden"}
+      initial="hidden"
       variants={containerVariants}
       {...triggerProps}
     >

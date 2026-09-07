@@ -2,8 +2,9 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
 import type { Image as ImageData } from "@/types/content";
 
@@ -26,7 +27,7 @@ export function ParallaxImage({
   priority = false,
 }: ParallaxImageProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const active = !reduce && isDesktop;
 

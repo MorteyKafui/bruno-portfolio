@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 interface ImpactChainProps {
   steps: string[];
@@ -9,7 +10,7 @@ interface ImpactChainProps {
 
 export function ImpactChain({ steps }: ImpactChainProps) {
   const ref = useRef<HTMLOListElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start 85%", "end 55%"],
@@ -38,7 +39,7 @@ export function ImpactChain({ steps }: ImpactChainProps) {
             index={index}
             total={steps.length}
             progress={scrollYProgress}
-            reduce={Boolean(reduce)}
+            reduce={reduce}
           >
             {step}
           </ChainStep>
