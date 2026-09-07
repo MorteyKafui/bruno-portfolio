@@ -1,43 +1,50 @@
+import type { Metadata } from "next";
+import { hasLocale } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
 import { Hero } from "@/components/hero/hero";
 import { Connection } from "@/components/home/connection";
 import { Educator } from "@/components/home/educator";
 import { Impact } from "@/components/home/impact";
 import { Perspective } from "@/components/home/perspective";
 import { ResearchAreas } from "@/components/home/research-areas";
+import { Services } from "@/components/home/services";
 import { Statement } from "@/components/home/statement";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/navigation/site-header";
-import { footer, hero } from "@/data/home";
-import { primaryNavigation } from "@/data/navigation";
-import { professor } from "@/data/professor";
+import { displayName, professor } from "@/data/professor";
+import { localize } from "@/i18n/localized";
+import { routing } from "@/i18n/routing";
+import { alternatesFor } from "@/lib/seo";
 
-export default function Home() {
+export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) return {};
+  const t = await getTranslations({ locale, namespace: "Metadata" });
+  return {
+    title: {
+      absolute: t("homeTitle", {
+        name: displayName,
+        title: localize(professor.title, locale),
+        university: localize(professor.current.institution, locale),
+      }),
+    },
+    alternates: alternatesFor(locale, "/"),
+  };
+}
+
+export default async function Home({ params }: PageProps<"/[locale]">) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+
   return (
-    <>
-      <SiteHeader
-        name={professor.name}
-        items={primaryNavigation}
-        descriptor={footer.descriptor}
-      />
-      <main id="main" className="flex-1">
-        <Hero
-          eyebrow={hero.eyebrow}
-          roles={professor.roles}
-          lines={hero.lines}
-          lead={hero.lead}
-          primaryCta={hero.primaryCta}
-          secondaryCta={hero.secondaryCta}
-          scrollCue={hero.scrollCue}
-          portrait={professor.portrait}
-        />
-        <Statement />
-        <ResearchAreas />
-        <Impact />
-        <Educator />
-        <Perspective />
-        <Connection />
-      </main>
-      <SiteFooter />
-    </>
+    <main id="main" className="flex-1">
+      <Hero locale={locale} />
+      <Statement locale={locale} />
+      <ResearchAreas locale={locale} />
+      <Impact locale={locale} />
+      <Educator locale={locale} />
+      <Services locale={locale} />
+      <Perspective locale={locale} />
+      <Connection locale={locale} />
+    </main>
   );
 }

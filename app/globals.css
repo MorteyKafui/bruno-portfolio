@@ -142,6 +142,10 @@
   --sidebar-ring: var(--teal);
 }
 
+/*
+ * Dark tokens apply both to the site-wide dark theme (class on <html>) and to
+ * inverse sections in the light theme (class on the section).
+ */
 .dark {
   --background: var(--charcoal);
   --foreground: var(--warm-white);
@@ -174,6 +178,36 @@
   --sidebar-accent-foreground: var(--warm-white);
   --sidebar-border: rgb(244 241 234 / 0.14);
   --sidebar-ring: var(--teal-bright);
+}
+
+/*
+ * An inverse section inside the dark theme: lift it onto a teal-tinted
+ * charcoal so light/dark rhythm still reads. Also used by the header pill and
+ * the mobile menu when they sit over such a section.
+ */
+.dark .dark {
+  --background: #0f1c20;
+  --card: #142428;
+  --popover: #142428;
+  --secondary: #1a2c31;
+  --muted: #1a2c31;
+}
+
+/* Hero portrait: blends into the page in light mode, becomes a mounted print in dark mode. */
+.portrait-group {
+  mix-blend-mode: multiply;
+}
+.dark .portrait-group {
+  mix-blend-mode: normal;
+}
+.dark .portrait-plate {
+  isolation: isolate;
+  background: var(--ivory);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 40px 80px -30px rgb(0 0 0 / 0.6);
+}
+.dark .portrait-plate img {
+  mix-blend-mode: multiply;
 }
 
 @utility text-display-xl {
@@ -219,6 +253,46 @@
   letter-spacing: -0.005em;
 }
 
+@utility editorial-prose {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  max-width: 42rem;
+
+  & > * + * {
+    margin-top: 1.25em;
+  }
+
+  & h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-top: 2em;
+  }
+
+  & h3 {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    line-height: 1.25;
+    margin-top: 1.6em;
+  }
+
+  & a {
+    color: var(--accent);
+    text-underline-offset: 0.2em;
+    text-decoration: underline;
+  }
+
+  & ul,
+  & ol {
+    padding-inline-start: 1.25em;
+  }
+
+  & li + li {
+    margin-top: 0.4em;
+  }
+}
+
 @utility container-editorial {
   width: 100%;
   max-width: 90rem;
@@ -239,6 +313,30 @@
   body {
     @apply bg-background text-foreground;
     text-rendering: optimizeLegibility;
+    transition:
+      background-color 0.5s var(--ease-editorial),
+      color 0.5s var(--ease-editorial);
+  }
+
+  /* Range inputs are used as the accessible control behind custom sliders. */
+  input[type="range"].sr-slider {
+    appearance: none;
+    background: transparent;
+    cursor: ew-resize;
+  }
+  input[type="range"].sr-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 2.75rem;
+    height: 100%;
+    background: transparent;
+    cursor: ew-resize;
+  }
+  input[type="range"].sr-slider::-moz-range-thumb {
+    width: 2.75rem;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    cursor: ew-resize;
   }
 
   ::selection {

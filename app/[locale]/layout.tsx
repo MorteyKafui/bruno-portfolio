@@ -1,12 +1,24 @@
 import type { Metadata } from "next";
 import { DM_Serif_Display, Inter } from "next/font/google";
-import "./globals.css";
+import { notFound } from "next/navigation";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import "../globals.css";
 import { cn } from "@/lib/utils";
+import { CookieBanner } from "@/components/consent/cookie-banner";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { MotionProvider } from "@/components/motion/motion-provider";
-import { professor } from "@/data/professor";
+import { SiteHeader } from "@/components/navigation/site-header";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import { displayName, professor } from "@/data/professor";
+import { researchAreas } from "@/data/research";
+import { getDirection } from "@/i18n/config";
+import { localize } from "@/i18n/localized";
+import { routing } from "@/i18n/routing";
+import { absoluteUrl, ogLocales, siteUrl } from "@/lib/seo";
 
 const inter = Inter({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   variable: "--font-inter",
   display: "swap",
 });
@@ -14,35 +26,106 @@ const inter = Inter({
 const dmSerif = DM_Serif_Display({
   weight: "400",
   style: ["normal", "italic"],
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   variable: "--font-dm-serif",
   display: "swap",
 });
 
-const siteTitle = `${professor.fullName}, ${professor.title}`;
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
-export const metadata: Metadata = {
-  title: {
-    default: siteTitle,
-    template: `%s | ${siteTitle}`,
-  },
-  description: professor.shortBio,
-};
+export async function generateMetadata({
+  params,
+}: LayoutProps<"/[locale]">): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) return {};
+  const t = await getTranslations({ locale, namespace: "Metadata" });
+  const title = t("defaultTitle", {
+    name: displayName,
+    title: localize(professor.title, locale),
+  });
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+  return {
+    metadataBase: siteUrl,
+    title: { default: title, template: `%s | ${displayName}` },
+    description: localize(professor.shortBio, locale),
+    applicationName: displayName,
+    authors: [{ name: displayName }],
+    creator: displayName,
+    openGraph: {
+      type: "profile",
+      siteName: displayName,
+      firstName: "Isaac Kwesi",
+      lastName: "Acquah",
+      ...ogLocales(locale),
+    },
+    twitter: { card: "summary_large_image" },
+    robots: { index: true, follow: true },
+  };
+}
+
+function personJsonLd(locale: (typeof routing.locales)[number]) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: professor.fullName,
+    honorificPrefix: professor.honorific,
+    jobTitle: localize(professor.title, locale),
+    description: localize(professor.shortBio, locale),
+    image: absoluteUrl(professor.portrait.src),
+    url: absoluteUrl(`/${locale}`),
+    worksFor: {
+      "@type": "CollegeOrUniversity",
+      name: localize(professor.current.institution, locale),
+      department: professor.current.unit
+        ? { "@type": "Organization", name: localize(professor.current.unit, locale) }
+        : undefined,
+    },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Winneba",
+      addressCountry: professor.countryCode,
+    },
+    knowsAbout: researchAreas.map((area) => localize(area.title, locale)),
+    knowsLanguage: routing.locales,
+  };
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
+
+export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  const t = await getTranslations({ locale, namespace: "Common" });
+
   return (
     <html
-      lang="en"
+      lang={locale}
+      dir={getDirection(locale)}
+      suppressHydrationWarning
       className={cn("h-full antialiased", inter.variable, dmSerif.variable)}
     >
       <body className="flex min-h-full flex-col">
-        <a
-          href="#main"
-          className="sr-only z-100 rounded-sm bg-ink px-4 py-2 text-sm text-ivory focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
-        >
-          Skip to content
-        </a>
-        <MotionProvider>{children}</MotionProvider>
+        <ThemeProvider>
+          <NextIntlClientProvider>
+            <a
+              href="#main"
+              className="sr-only z-100 rounded-sm bg-foreground px-4 py-2 text-sm text-background focus:not-sr-only focus:fixed focus:top-4 focus:start-4"
+            >
+              {t("skipToContent")}
+            </a>
+            <MotionProvider>
+              <SiteHeader />
+              <div className="relative z-10 flex-1 bg-background">{children}</div>
+              <SiteFooter locale={locale} />
+            </MotionProvider>
+            <CookieBanner />
+          </NextIntlClientProvider>
+        </ThemeProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: personJsonLd(locale) }}
+        />
       </body>
     </html>
   );

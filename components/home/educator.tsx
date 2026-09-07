@@ -1,58 +1,63 @@
 import { Section } from "@/components/editorial/section";
 import { SectionHeading } from "@/components/editorial/section-heading";
-import { ParallaxImage } from "@/components/motion/parallax-image";
 import { Reveal } from "@/components/motion/reveal";
-import { sectionIds } from "@/data/navigation";
 import { educator } from "@/data/home";
-import { graduationPortrait } from "@/data/professor";
+import type { Locale } from "@/i18n/config";
+import { pick } from "@/i18n/localized";
 
-export function Educator() {
+export function Educator({ locale }: { locale: Locale }) {
+  const t = pick(locale);
+  const sequence = t(educator.sequence);
+
   return (
-    <Section id={sectionIds.teaching} theme="white" aria-labelledby="educator-heading">
-      <div className="container-editorial grid gap-14 lg:grid-cols-12 lg:gap-8">
-        <Reveal
-          as="figure"
-          y={40}
-          amount={0.15}
-          className="lg:col-span-5 lg:row-start-1"
-        >
-          <ParallaxImage
-            image={graduationPortrait}
-            sizes="(min-width: 1024px) 38vw, 100vw"
-            amount={7}
-            className="aspect-[3/4] w-full bg-ivory"
-          />
-          <figcaption className="text-eyebrow mt-5 text-graphite">
-            {educator.eyebrow}
-          </figcaption>
-        </Reveal>
-
-        <div className="lg:col-span-6 lg:col-start-7 lg:row-start-1 lg:self-center lg:pt-16">
-          <SectionHeading
-            id="educator-heading"
-            index={educator.index}
-            eyebrow={educator.eyebrow}
-            lines={educator.lines}
-            accent={1}
-          />
-
-          <Reveal delay={0.15} className="mt-12">
-            <p className="text-lead max-w-lg text-graphite">{educator.body}</p>
-          </Reveal>
-
-          <Reveal delay={0.25} className="mt-14">
-            <ul className="divide-y divide-line border-y border-line">
-              {educator.pillars.map((pillar, index) => (
-                <li key={pillar} className="flex items-baseline gap-6 py-5">
-                  <span className="text-eyebrow tabular-nums text-graphite">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="font-display text-2xl leading-none">{pillar}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+    <Section theme="white" aria-labelledby="educator-heading">
+      <div className="container-editorial">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-6">
+            <SectionHeading
+              id="educator-heading"
+              index={educator.index}
+              eyebrow={t(educator.eyebrow)}
+              lines={t(educator.lines)}
+            />
+          </div>
+          <div className="flex flex-col gap-10 lg:col-span-5 lg:col-start-8 lg:pt-24">
+            <Reveal>
+              <p className="text-lead text-muted-foreground">{t(educator.body)}</p>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <ul className="flex flex-wrap gap-x-6 gap-y-3">
+                {t(educator.pillars).map((pillar) => (
+                  <li key={pillar} className="flex items-center gap-3 text-sm text-foreground">
+                    <span aria-hidden className="size-1.5 rounded-full bg-accent" />
+                    {pillar}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
         </div>
+
+        <ol
+          className="mt-20 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 md:mt-28 lg:grid-cols-5"
+          aria-label={t(educator.eyebrow)}
+        >
+          {sequence.map((word, index) => (
+            <Reveal
+              as="li"
+              key={word}
+              delay={index * 0.12}
+              amount={0.4}
+              className="group flex flex-col gap-4"
+            >
+              <span className="text-eyebrow tabular-nums text-muted-foreground transition-colors duration-500 group-hover:text-accent">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="block h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-700 ease-(--ease-editorial) group-hover:scale-x-100 rtl:origin-right" />
+              <span className="font-display text-3xl uppercase tracking-tight sm:text-4xl">{word}</span>
+            </Reveal>
+          ))}
+        </ol>
       </div>
     </Section>
   );

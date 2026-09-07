@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Installed registry sources, kept for reference. The live header and
+    // footer are the adapted versions in components/navigation and layout.
+    "components/blocks/**",
   ]),
 ]);
 

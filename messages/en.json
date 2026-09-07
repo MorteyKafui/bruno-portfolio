@@ -1,0 +1,80 @@
+{
+  "Metadata": {
+    "defaultTitle": "{name}: {title}",
+    "homeTitle": "{name}, {title}, {university}",
+    "siteName": "{name}"
+  },
+  "Common": {
+    "skipToContent": "Skip to content",
+    "close": "Close",
+    "menu": "Menu"
+  },
+  "Nav": {
+    "label": "Primary",
+    "about": "About",
+    "research": "Research",
+    "services": "Services",
+    "contact": "Get in touch",
+    "blog": "Blog"
+  },
+  "Header": {
+    "home": "{name}, home",
+    "downloadCv": "Download CV",
+    "menuDescription": "Site navigation, language, and display settings for {name}"
+  },
+  "Footer": {
+    "explore": "Explore",
+    "connect": "Connect",
+    "language": "Language",
+    "download": "Download",
+    "backToTop": "Back to top",
+    "rights": "All rights reserved.",
+    "cv": "Curriculum vitae (PDF)"
+  },
+  "Language": {
+    "label": "Language",
+    "change": "Change language, current: {language}",
+    "comingSoon": "Soon"
+  },
+  "Theme": {
+    "toggle": "Switch between light and dark mode",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "Cookie": {
+    "title": "A note on cookies",
+    "body": "This site stores your language and display preferences so it can greet you the same way next time. No tracking, no advertising.",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
+  "Hero": {
+    "scrollCue": "Scroll",
+    "portraitAlt": "Portrait of {name}, medical physicist and lecturer"
+  },
+  "Sections": {
+    "revealEmail": "Reveal email address",
+    "emailLabel": "Email",
+    "locationLabel": "Based in",
+    "topics": "{title} topics",
+    "compareLabel": "Compare the MRI rendering with the synthetic CT rendering",
+    "mri": "MRI",
+    "syntheticCt": "Synthetic CT",
+    "dragHint": "Drag to compare",
+    "illustrative": "Illustrative rendering, not patient data"
+  },
+  "Blog": {
+    "eyebrow": "Insights",
+    "title": "Notes from the lab and the lecture hall.",
+    "lead": "Short essays on medical physics, imaging, radiation safety, and teaching. Articles are written in MDX and published only when the wording is ready.",
+    "empty": "The first essays will appear here. Nothing is drafted as a placeholder.",
+    "fallback": "This article is not yet available in the selected language. The original English version is shown.",
+    "read": "Read",
+    "published": "Published"
+  },
+  "NotFound": {
+    "eyebrow": "404",
+    "title": "This page is not here.",
+    "body": "The address may have changed or never existed. The homepage is the best place to start again.",
+    "back": "Back to the homepage"
+  }
+}

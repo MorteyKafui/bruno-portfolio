@@ -9,7 +9,9 @@ import { cn } from "@/lib/utils";
 import type { Image as ImageData } from "@/types/content";
 
 interface ParallaxImageProps {
-  image: ImageData;
+  image: Omit<ImageData, "alt">;
+  /** Already-localized alternative text. */
+  alt: string;
   sizes: string;
   className?: string;
   imageClassName?: string;
@@ -20,6 +22,7 @@ interface ParallaxImageProps {
 
 export function ParallaxImage({
   image,
+  alt,
   sizes,
   className,
   imageClassName,
@@ -45,7 +48,7 @@ export function ParallaxImage({
       >
         <Image
           src={image.src}
-          alt={image.alt}
+          alt={alt}
           fill
           sizes={sizes}
           priority={priority}

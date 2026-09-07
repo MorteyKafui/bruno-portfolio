@@ -1,25 +1,39 @@
-import Link from "next/link";
+"use client";
+
+import { useTranslations } from "next-intl";
+import { professor } from "@/data/professor";
+import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 interface WordmarkProps {
-  name: string;
   className?: string;
   onClick?: () => void;
 }
 
-export function Wordmark({ name, className, onClick }: WordmarkProps) {
+/**
+ * "I.K. Acquah" in the display serif. The initials' periods take the accent
+ * colour, a quiet signature detail that reads at any size.
+ */
+export function Wordmark({ className, onClick }: WordmarkProps) {
+  const t = useTranslations("Header");
+  const parts = professor.shortName.split(".");
+
   return (
     <Link
       href="/"
       onClick={onClick}
-      aria-label={`${name}, home`}
+      aria-label={t("home", { name: professor.fullName })}
       className={cn(
-        "font-display text-[1.375rem] leading-none tracking-tight text-foreground",
+        "font-display text-[1.375rem] leading-none tracking-tight whitespace-nowrap text-foreground",
         className,
       )}
     >
-      {name}
-      <span className="text-teal dark:text-teal-bright">.</span>
+      {parts.map((part, index) => (
+        <span key={index}>
+          {part}
+          {index < parts.length - 1 && <span className="text-accent">.</span>}
+        </span>
+      ))}
     </Link>
   );
 }

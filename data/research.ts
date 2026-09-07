@@ -1,42 +1,40 @@
+import { en } from "@/i18n/localized";
 import type { ResearchArea } from "@/types/content";
 
-// TODO(content): confirm which areas apply to the professor, then refine each
-// description. Areas are phrased as questions the field asks, not as claims
-// about completed work.
+// The four research themes named on Dr Acquah's earlier site. Descriptions
+// frame each theme as the question it pursues, not as claimed results.
+// TODO(content): refine wording with Dr Acquah; add project pages in feature 3.
 export const researchAreas: ResearchArea[] = [
   {
-    title: "Medical Imaging",
-    slug: "medical-imaging",
-    description:
-      "How image quality, dose, and reconstruction physics shape what clinicians can see in CT, MRI, and PET.",
-    tags: ["CT", "MRI", "PET", "Image quality"],
+    title: en("MRI-only radiotherapy and synthetic CT"),
+    slug: "mri-only-radiotherapy",
+    description: en(
+      "How treatment planning can rely on MRI alone, with synthetic CT generated from MR images supplying the electron density that dose calculation needs.",
+    ),
+    tags: en(["MRI", "Synthetic CT", "Treatment planning"]),
   },
   {
-    title: "Radiotherapy Physics",
-    slug: "radiotherapy-physics",
-    description:
-      "How treatment plans translate physics into precise, safe dose delivery for every patient.",
-    tags: ["Treatment planning", "Dose delivery", "Quality assurance"],
+    title: en("AI in medical imaging"),
+    slug: "ai-in-medical-imaging",
+    description: en(
+      "How deep learning can support image analysis and clinical decisions while its outputs stay validated, explainable, and physically plausible.",
+    ),
+    tags: en(["Deep learning", "Image analysis", "Validation"]),
   },
   {
-    title: "Radiation Dosimetry",
-    slug: "radiation-dosimetry",
-    description:
-      "How radiation dose is measured, modelled, and verified from detector to patient.",
-    tags: ["Detectors", "Calibration", "Dose modelling"],
+    title: en("Radiation protection, QA, and dose safety"),
+    slug: "radiation-protection",
+    description: en(
+      "How measurement, quality assurance, and safety culture keep radiation doses justified and optimised for patients, staff, and the public.",
+    ),
+    tags: en(["Dosimetry", "Quality assurance", "Radiation safety"]),
   },
   {
-    title: "AI in Healthcare",
-    slug: "ai-in-healthcare",
-    description:
-      "How machine learning can support imaging, planning, and decision-making without losing physical rigour.",
-    tags: ["Machine learning", "Decision support", "Validation"],
-  },
-  {
-    title: "Radiation Safety",
-    slug: "radiation-safety",
-    description:
-      "How protection principles, measurement, and education keep patients, staff, and the public safe.",
-    tags: ["Protection", "Regulation", "Education"],
+    title: en("Physics education"),
+    slug: "physics-education",
+    description: en(
+      "How physics is taught and learned, and how the next generation of physics teachers and medical physicists is prepared.",
+    ),
+    tags: en(["Pedagogy", "Curriculum", "Teacher preparation"]),
   },
 ];

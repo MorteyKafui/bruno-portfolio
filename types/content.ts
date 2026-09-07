@@ -1,42 +1,63 @@
+import type { Localized } from "@/i18n/localized";
+
 export interface Image {
   /** Path relative to `/public`, e.g. `/assets/imgs/portrait.jpg`. */
   src: string;
-  alt: string;
+  alt: Localized<string>;
   width: number;
   height: number;
 }
 
 export interface Link {
-  label: string;
+  label: Localized<string>;
   href: string;
   external?: boolean;
 }
 
-export type NavItem = Link;
+/** A primary navigation entry; the label comes from the `Nav` messages. */
+export interface NavItem {
+  key: "about" | "research" | "services" | "contact" | "blog";
+  /** Locale-aware pathname. Homepage acts also carry a `hash`. */
+  pathname: "/" | "/blog";
+  hash?: string;
+  /** Hidden until the destination route ships. */
+  enabled: boolean;
+}
+
+export interface Appointment {
+  role: Localized<string>;
+  institution: Localized<string>;
+  unit?: Localized<string>;
+}
 
 export interface Professor {
-  /** First name, used for the wordmark. */
-  name: string;
-  /** Full display name. Placeholder until the real surname is supplied. */
+  honorific: string;
   fullName: string;
-  title: string;
-  roles: string[];
-  university?: string;
-  department?: string;
-  location?: string;
-  shortBio: string;
+  /** Wordmark form of the name. */
+  shortName: string;
+  initials: string;
+  title: Localized<string>;
+  roles: Localized<string[]>;
+  current: Appointment;
+  former: Appointment[];
+  location: Localized<string>;
+  countryCode: string;
+  values: Localized<string[]>;
+  shortBio: Localized<string>;
   portrait: Image;
+  /** Stored plainly; rendered obfuscated until the visitor reveals it. */
   email?: string;
-  cvUrl?: string;
+  cv: { href: string; fileName: string; placeholder: boolean };
+  /** Academic profile links; empty until personal URLs are supplied. */
   links: Link[];
 }
 
 export interface ResearchArea {
-  title: string;
+  title: Localized<string>;
   /** Unique lowercase kebab-case identifier, also used for future routes. */
   slug: string;
-  description: string;
-  tags: string[];
-  longDescription?: string;
+  description: Localized<string>;
+  tags: Localized<string[]>;
+  longDescription?: Localized<string>;
   image?: Image;
 }

@@ -4,7 +4,7 @@ import { motion, type HTMLMotionProps } from "motion/react";
 
 export const editorialEase = [0.22, 1, 0.36, 1] as const;
 
-type RevealTag = "div" | "li" | "p" | "span" | "figure" | "article";
+type RevealTag = "div" | "li" | "p" | "span" | "figure" | "figcaption" | "article";
 
 const elements = {
   div: motion.div,
@@ -12,6 +12,7 @@ const elements = {
   p: motion.p,
   span: motion.span,
   figure: motion.figure,
+  figcaption: motion.figcaption,
   article: motion.article,
 };
 

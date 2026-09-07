@@ -1,24 +1,26 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
-import Link from "next/link";
+import { useState, useSyncExternalStore } from "react";
+import { Download } from "lucide-react";
+import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "@/components/i18n/language-switcher";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { Button } from "@/components/ui/button";
+import { navHref, visibleNavigation } from "@/data/navigation";
+import { professor } from "@/data/professor";
+import { useActiveSection } from "@/hooks/use-active-section";
+import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import type { NavItem } from "@/types/content";
 import { MobileMenu } from "./mobile-menu";
 import { Wordmark } from "./wordmark";
 
-interface SiteHeaderProps {
-  name: string;
-  items: NavItem[];
-  descriptor: string;
-}
-
 type SurfaceTheme = "light" | "dark";
+type HeaderState = `${"top" | "scrolled"}|${SurfaceTheme}`;
 
 /** Theme of the section currently sitting under the header bar. */
 function readSurfaceTheme(): SurfaceTheme {
-  const probeY = 40;
-  const hits = document.elementsFromPoint(window.innerWidth / 2, probeY);
+  const hits = document.elementsFromPoint(window.innerWidth / 2, 40);
   for (const el of hits) {
     if (el.closest("header")) continue;
     const surface = el.closest<HTMLElement>("[data-theme]");
@@ -26,8 +28,6 @@ function readSurfaceTheme(): SurfaceTheme {
   }
   return "light";
 }
-
-type HeaderState = `${"top" | "scrolled"}|${SurfaceTheme}`;
 
 function subscribeToViewport(onChange: () => void) {
   window.addEventListener("scroll", onChange, { passive: true });
@@ -42,7 +42,16 @@ function readHeaderState(): HeaderState {
   return `${window.scrollY > 24 ? "scrolled" : "top"}|${readSurfaceTheme()}`;
 }
 
-export function SiteHeader({ name, items, descriptor }: SiteHeaderProps) {
+const indicatorSpring = { type: "spring", stiffness: 420, damping: 32, mass: 0.7 } as const;
+
+/**
+ * Adapted from the efferd `header-2` block: full width and transparent at the
+ * top of the page, then a compact floating pill after a short scroll. Chrome
+ * colours follow the section underneath (dark sections get dark chrome).
+ */
+export function SiteHeader() {
+  const t = useTranslations("Header");
+  const tNav = useTranslations("Nav");
   const state = useSyncExternalStore(
     subscribeToViewport,
     readHeaderState,
@@ -50,47 +59,88 @@ export function SiteHeader({ name, items, descriptor }: SiteHeaderProps) {
   );
   const [position, surface] = state.split("|") as ["top" | "scrolled", SurfaceTheme];
   const scrolled = position === "scrolled";
+  const pathname = usePathname();
+  const activeId = useActiveSection(visibleNavigation.map((item) => item.hash ?? ""));
+  const [hovered, setHovered] = useState<string | null>(null);
 
   return (
     <header
       data-scrolled={scrolled || undefined}
       data-surface={surface}
       className={cn(
-        "fixed inset-x-0 top-0 z-40 border-b text-foreground transition-[background-color,border-color,color] duration-500 ease-(--ease-editorial)",
+        "fixed inset-x-0 top-0 z-50 mx-auto w-full border text-foreground transition-[max-width,background-color,border-color,color,box-shadow,top,border-radius] duration-500 ease-(--ease-editorial)",
         surface === "dark" && "dark",
         scrolled
-          ? "border-foreground/10 bg-background/85 backdrop-blur-md supports-backdrop-filter:bg-background/70"
-          : "border-transparent bg-transparent",
+          ? "max-w-[min(76rem,calc(100%-1.5rem))] border-foreground/10 bg-background/85 shadow-[0_18px_50px_-30px_rgb(0_0_0/0.45)] backdrop-blur-md supports-backdrop-filter:bg-background/75 md:top-3 md:rounded-[1.75rem]"
+          : "max-w-[100vw] border-transparent bg-transparent",
       )}
     >
       <nav
-        aria-label="Primary"
+        aria-label={tNav("label")}
         className={cn(
-          "container-editorial flex items-center justify-between transition-[height] duration-500 ease-(--ease-editorial)",
-          scrolled ? "h-16" : "h-20 md:h-24",
+          "flex items-center justify-between transition-[height,padding] duration-500 ease-(--ease-editorial)",
+          scrolled ? "h-14 px-4 md:ps-6 md:pe-3" : "container-editorial h-20 md:h-24",
         )}
       >
-        <Wordmark name={name} />
+        <Wordmark />
 
-        <ul className="hidden items-center gap-7 md:flex lg:gap-9">
-          {items.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className="group relative py-2 text-[0.8125rem] font-medium tracking-tight text-muted-foreground transition-colors duration-300 hover:text-foreground"
-              >
-                {item.label}
-                <span
-                  aria-hidden
-                  className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-accent transition-transform duration-400 ease-(--ease-editorial) group-hover:scale-x-100"
-                />
-              </Link>
-            </li>
-          ))}
+        <ul
+          className="hidden items-center lg:flex"
+          onPointerLeave={() => setHovered(null)}
+        >
+          {visibleNavigation.map((item) => {
+            const isActive = item.hash ? item.hash === activeId : pathname === item.pathname;
+            return (
+              <li key={item.key} className="relative">
+                <Link
+                  href={navHref(item)}
+                  onPointerEnter={() => setHovered(item.key)}
+                  onFocus={() => setHovered(item.key)}
+                  onBlur={() => setHovered(null)}
+                  className={cn(
+                    "relative block rounded-full px-3.5 py-2 text-[0.8125rem] font-medium tracking-tight transition-colors duration-300",
+                    isActive || hovered === item.key ? "text-foreground" : "text-muted-foreground",
+                  )}
+                >
+                  {hovered === item.key && (
+                    <motion.span
+                      layoutId="nav-hover"
+                      aria-hidden
+                      transition={indicatorSpring}
+                      className="absolute inset-0 rounded-full bg-foreground/[0.06]"
+                    />
+                  )}
+                  <span className="relative z-10">{tNav(item.key)}</span>
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active"
+                      aria-hidden
+                      transition={indicatorSpring}
+                      className="absolute bottom-0.5 start-1/2 size-1 -translate-x-1/2 rounded-full bg-accent"
+                    />
+                  )}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
-        <div className="md:hidden">
-          <MobileMenu name={name} items={items} descriptor={descriptor} />
+        <div className="flex items-center gap-0.5 md:gap-1">
+          <LanguageSwitcher className="hidden md:inline-flex" />
+          <ThemeToggle className="hidden md:inline-flex" />
+          <Button
+            size="sm"
+            variant="outline"
+            nativeButton={false}
+            className="ms-1 hidden md:inline-flex"
+            render={<a href={professor.cv.href} download={professor.cv.fileName} />}
+          >
+            {t("downloadCv")}
+            <Download aria-hidden className="size-3.5" />
+          </Button>
+          <div className="lg:hidden">
+            <MobileMenu />
+          </div>
         </div>
       </nav>
     </header>

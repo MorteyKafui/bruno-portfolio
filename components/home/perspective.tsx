@@ -1,36 +1,38 @@
-import { Eyebrow } from "@/components/editorial/eyebrow";
 import { Section } from "@/components/editorial/section";
-import { SplitLines } from "@/components/motion/split-lines";
+import { Eyebrow } from "@/components/editorial/eyebrow";
 import { Reveal } from "@/components/motion/reveal";
-import { sectionIds } from "@/data/navigation";
+import { SplitLines } from "@/components/motion/split-lines";
 import { perspective } from "@/data/home";
+import type { Locale } from "@/i18n/config";
+import { pick } from "@/i18n/localized";
 
-export function Perspective() {
+export function Perspective({ locale }: { locale: Locale }) {
+  const t = pick(locale);
+  const lines = t(perspective.lines).map((text, index, all) => ({
+    text,
+    className: index === all.length - 1 ? "text-teal-bright" : undefined,
+  }));
+
   return (
-    <Section
-      id={sectionIds.perspective}
-      theme="dark"
-      aria-labelledby="perspective-heading"
-      className="py-32 md:py-44 lg:py-56"
-    >
+    <Section theme="teal" aria-labelledby="perspective-heading">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_50%_0%,rgb(79_163_165/0.22),transparent_70%)]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_20%_0%,rgb(79_163_165/0.28),transparent_60%),radial-gradient(60%_50%_at_100%_100%,rgb(11_17_20/0.6),transparent_70%)]"
       />
-
-      <div className="container-editorial flex flex-col items-center text-center">
-        <Reveal>
-          <Eyebrow index={perspective.index} className="text-cool-gray">
-            {perspective.eyebrow}
-          </Eyebrow>
+      <div className="container-editorial">
+        <Reveal className="flex items-baseline gap-4">
+          <span className="text-eyebrow tabular-nums text-warm-white/60">{perspective.index}</span>
+          <Eyebrow className="text-teal-bright">{t(perspective.eyebrow)}</Eyebrow>
         </Reveal>
-        <SplitLines
-          as="p"
-          id="perspective-heading"
-          lines={perspective.lines}
-          stagger={0.12}
-          className="text-display-md mt-12 max-w-5xl md:mt-16"
-        />
+        <div className="mt-12 lg:max-w-[11ch] lg:text-display-lg">
+          <SplitLines
+            as="h2"
+            id="perspective-heading"
+            lines={lines}
+            className="text-display-lg"
+            stagger={0.09}
+          />
+        </div>
       </div>
     </Section>
   );
