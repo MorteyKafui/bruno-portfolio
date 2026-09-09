@@ -85,7 +85,7 @@ export function SiteHeader() {
           scrolled ? "h-14 px-4 md:ps-6 md:pe-3" : "container-editorial h-20 md:h-24",
         )}
       >
-        <Wordmark transitionTypes={pathname.startsWith("/blog") ? ["nav-back"] : undefined} />
+        <Wordmark transitionTypes={pathname !== "/" ? ["nav-back"] : undefined} />
 
         <ul
           className="hidden items-center lg:flex"
@@ -97,12 +97,12 @@ export function SiteHeader() {
               <li key={item.key} className="relative">
                 <Link
                   href={navHref(item)}
-                  transitionTypes={item.key === "blog" ? ["nav-forward"] : undefined}
+                  transitionTypes={item.pathname !== "/" ? ["nav-forward"] : undefined}
                   onPointerEnter={() => setHovered(item.key)}
                   onFocus={() => setHovered(item.key)}
                   onBlur={() => setHovered(null)}
                   className={cn(
-                    "relative block rounded-full px-3.5 py-2 text-[0.8125rem] font-medium tracking-tight transition-colors duration-300",
+                    "relative block rounded-full px-3 py-2 text-[0.8125rem] font-medium tracking-tight transition-colors duration-300 xl:px-3.5",
                     isActive || hovered === item.key ? "text-foreground" : "text-muted-foreground",
                   )}
                 >

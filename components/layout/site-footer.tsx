@@ -66,6 +66,7 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
                       <li key={item.key}>
                         <Link
                           href={navHref(item)}
+                          transitionTypes={item.pathname !== "/" ? ["nav-forward"] : undefined}
                           className="text-sm text-foreground/80 transition-colors duration-300 hover:text-accent"
                         >
                           {tNav(item.key)}

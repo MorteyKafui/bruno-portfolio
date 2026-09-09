@@ -76,7 +76,7 @@ export function MobileMenu() {
               <Link
                 href={navHref(entry)}
                 onClick={close}
-                transitionTypes={entry.key === "blog" ? ["nav-forward"] : undefined}
+                transitionTypes={entry.pathname !== "/" ? ["nav-forward"] : undefined}
                 className="group flex items-baseline gap-5 border-b border-foreground/10 py-4"
               >
                 <span className="text-eyebrow w-6 tabular-nums text-muted-foreground">

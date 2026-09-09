@@ -5,7 +5,7 @@ import { absoluteUrl } from "@/lib/seo";
 
 // Routes are added here as their features ship; each entry lists every
 // enabled locale as an alternate so search engines see the language set.
-const routes = ["/", "/blog"] as const;
+const routes = ["/", "/publications", "/blog"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
