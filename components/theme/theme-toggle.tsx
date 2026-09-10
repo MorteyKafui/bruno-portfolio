@@ -12,11 +12,10 @@ interface ThemeToggleProps {
   withLabel?: boolean;
 }
 
-/**
- * Circle-from-center theme reveal. The server and the first client paint both
- * assume dark so the icon does not mismatch during hydration.
- */
-export function ThemeToggle({ className, withLabel = false }: ThemeToggleProps) {
+export function ThemeToggle({
+  className,
+  withLabel = false,
+}: ThemeToggleProps) {
   const { resolvedTheme, setTheme } = useTheme();
   const t = useTranslations("Theme");
   const [mounted, setMounted] = useState(false);
@@ -31,7 +30,7 @@ export function ThemeToggle({ className, withLabel = false }: ThemeToggleProps) 
     <span className={cn("inline-flex items-center", withLabel && "gap-3")}>
       <AnimatedThemeToggler
         theme={theme}
-        onThemeChange={(next) => {
+        onThemeChange={next => {
           void playSwitchClick(next === "light" ? "on" : "off");
           setTheme(next);
         }}

@@ -13,7 +13,9 @@ const CHANGE_EVENT = "ika:consent";
 type Consent = "unknown" | "accepted" | "declined" | "unset";
 
 function readConsent(): Consent {
-  const match = document.cookie.match(new RegExp(`(?:^|; )${COOKIE}=(accepted|declined)`));
+  const match = document.cookie.match(
+    new RegExp(`(?:^|; )${COOKIE}=(accepted|declined)`),
+  );
   return match ? (match[1] as Consent) : "unset";
 }
 
@@ -29,13 +31,12 @@ function subscribe(onChange: () => void) {
   return () => window.removeEventListener(CHANGE_EVENT, onChange);
 }
 
-/**
- * Functional-cookie notice. The server renders nothing (`unknown`), so there
- * is no hydration branch; the client reads the cookie after hydration and
- * springs the notice in only when no choice has been recorded.
- */
 export function CookieBanner() {
-  const consent = useSyncExternalStore(subscribe, readConsent, (): Consent => "unknown");
+  const consent = useSyncExternalStore(
+    subscribe,
+    readConsent,
+    (): Consent => "unknown",
+  );
   const t = useTranslations("Cookie");
   const open = consent === "unset";
 
@@ -47,15 +48,31 @@ export function CookieBanner() {
           aria-label={t("title")}
           initial={{ opacity: 0, y: 48, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 24, scale: 0.98, transition: { duration: 0.25 } }}
-          transition={{ type: "spring", stiffness: 260, damping: 26, mass: 0.9, delay: 1.2 }}
-          className="fixed inset-x-4 bottom-4 z-40 sm:inset-x-auto sm:end-6 sm:bottom-6 sm:max-w-sm"
+          exit={{
+            opacity: 0,
+            y: 24,
+            scale: 0.98,
+            transition: { duration: 0.25 },
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 260,
+            damping: 26,
+            mass: 0.9,
+            delay: 1.2,
+          }}
+          className="fixed inset-x-4 bottom-4 z-40 sm:inset-x-auto sm:inset-e-6 sm:bottom-6 sm:max-w-sm"
         >
           <div className="rounded-md border border-border bg-popover/95 p-5 text-popover-foreground shadow-[0_24px_60px_-24px_rgb(0_0_0/0.35)] backdrop-blur-md">
             <div className="flex items-start gap-3">
-              <Cookie aria-hidden className="mt-0.5 size-4 shrink-0 text-accent" />
+              <Cookie
+                aria-hidden
+                className="mt-0.5 size-4 shrink-0 text-accent"
+              />
               <div className="flex flex-col gap-1.5">
-                <p className="font-display text-lg leading-snug">{t("title")}</p>
+                <p className="font-display text-lg leading-snug">
+                  {t("title")}
+                </p>
                 <p className="text-[0.8125rem] leading-relaxed text-muted-foreground">
                   {t("body")}
                 </p>
@@ -65,7 +82,11 @@ export function CookieBanner() {
               <Button size="sm" onClick={() => writeConsent("accepted")}>
                 {t("accept")}
               </Button>
-              <Button size="sm" variant="ghost" onClick={() => writeConsent("declined")}>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => writeConsent("declined")}
+              >
                 {t("decline")}
               </Button>
             </div>

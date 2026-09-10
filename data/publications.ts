@@ -11,9 +11,7 @@ export type PublicationFormat = "pdf" | "docx";
 
 export interface PublicationFile {
   format: PublicationFormat;
-  /** Public URL such as `/publications/mri-planning.pdf`. */
   href?: string;
-  /** Human-readable size, for example `2.4 MB`. */
   size?: string;
 }
 
@@ -32,11 +30,6 @@ export interface Publication {
   featured?: boolean;
 }
 
-/**
- * Verified from the PDFs in `public/publications/` and from
- * `public/publications/list-of-publications.docx`. That Word file is a
- * bibliography, not a paper, and is not listed here.
- */
 export const publications: Publication[] = [
   {
     id: "synthetic-ct-generation-from-mri-2025",
@@ -48,7 +41,8 @@ export const publications: Publication[] = [
       "Samuel Nii Adu Tagoe",
       "Theophilus Akumea Sackey",
     ],
-    journal: "Polish Journal of Medical Physics and Engineering, 31(3), 219-226",
+    journal:
+      "Polish Journal of Medical Physics and Engineering, 31(3), 219-226",
     year: 2025,
     type: "journal",
     doi: "https://doi.org/10.2478/pjmpe-2025-0025",
@@ -71,7 +65,8 @@ export const publications: Publication[] = [
       "Isaac Kwesi Acquah",
       "Mercy Afadzi Tetteh",
     ],
-    journal: "Polish Journal of Medical Physics and Engineering, 31(3), 256-262",
+    journal:
+      "Polish Journal of Medical Physics and Engineering, 31(3), 256-262",
     year: 2025,
     type: "journal",
     doi: "https://doi.org/10.2478/pjmpe-2025-0029",
@@ -257,7 +252,8 @@ export const publications: Publication[] = [
       "Isaac Kwesi Acquah",
       "Fortune Addo-Wuver",
     ],
-    journal: "International Journal of Engineering and Applied Physics, 3(2), 799-804",
+    journal:
+      "International Journal of Engineering and Applied Physics, 3(2), 799-804",
     year: 2023,
     type: "journal",
     url: "https://ijeap.org/ijeap/article/view/149",
@@ -308,7 +304,7 @@ export const publications: Publication[] = [
     journal: "Journal of Education and Practice, 14(8), 45-49",
     year: 2023,
     type: "journal",
-      doi: "https://doi.org/10.7176/JEP/14-8-06",
+    doi: "https://doi.org/10.7176/JEP/14-8-06",
     areas: ["physics-education"],
     file: {
       format: "pdf",

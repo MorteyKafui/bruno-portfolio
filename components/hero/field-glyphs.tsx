@@ -39,9 +39,6 @@ const MEDICAL_GLYPHS = [
   "e⁻",
 ] as const;
 
-/**
- * Desktop-only atmosphere. Mobile skips the canvas so the hero stays light.
- */
 export function FieldGlyphs() {
   const { resolvedTheme } = useTheme();
   const reduce = usePrefersReducedMotion();
@@ -64,7 +61,11 @@ export function FieldGlyphs() {
       mutationRate={0.02}
       interval={160}
       fadeBottom={0.72}
-      color={resolvedTheme === "dark" ? "oklch(0.748 0.132 128)" : "oklch(0.452 0.108 128)"}
+      color={
+        resolvedTheme === "dark"
+          ? "oklch(0.748 0.132 128)"
+          : "oklch(0.452 0.108 128)"
+      }
       className="absolute inset-0 opacity-35 dark:opacity-25"
     />
   );

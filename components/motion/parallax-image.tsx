@@ -10,12 +10,10 @@ import type { Image as ImageData } from "@/types/content";
 
 interface ParallaxImageProps {
   image: Omit<ImageData, "alt">;
-  /** Already-localized alternative text. */
   alt: string;
   sizes: string;
   className?: string;
   imageClassName?: string;
-  /** Travel as a percentage of the image height, split across the scroll range. */
   amount?: number;
   priority?: boolean;
 }
@@ -38,7 +36,11 @@ export function ParallaxImage({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], [`-${amount}%`, `${amount}%`]);
+  const y = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [`-${amount}%`, `${amount}%`],
+  );
 
   return (
     <div ref={ref} className={cn("relative overflow-hidden", className)}>

@@ -4,7 +4,6 @@ import type { Locale } from "@/i18n/config";
 import { pick } from "@/i18n/localized";
 import { HeroStage } from "./hero-stage";
 
-/** Resolves localized copy on the server and hands plain strings to the stage. */
 export async function Hero({ locale }: { locale: Locale }) {
   const t = pick(locale);
 

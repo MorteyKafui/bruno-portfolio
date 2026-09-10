@@ -26,7 +26,8 @@ function readSurfaceTheme(): SurfaceTheme {
     if (el.closest("header")) continue;
     const surface = el.closest<HTMLElement>("[data-theme]");
     if (surface?.dataset.theme === "dark") return "dark";
-    if (surface?.dataset.theme === "light") return documentDark ? "dark" : "light";
+    if (surface?.dataset.theme === "light")
+      return documentDark ? "dark" : "light";
   }
   return documentDark ? "dark" : "light";
 }
@@ -44,13 +45,13 @@ function readHeaderState(): HeaderState {
   return `${window.scrollY > 24 ? "scrolled" : "top"}|${readSurfaceTheme()}`;
 }
 
-const indicatorSpring = { type: "spring", stiffness: 420, damping: 32, mass: 0.7 } as const;
+const indicatorSpring = {
+  type: "spring",
+  stiffness: 420,
+  damping: 32,
+  mass: 0.7,
+} as const;
 
-/**
- * Adapted from the efferd `header-2` block: full width and transparent at the
- * top of the page, then a compact floating pill after a short scroll. Chrome
- * colours follow the section underneath (dark sections get dark chrome).
- */
 export function SiteHeader() {
   const t = useTranslations("Header");
   const tNav = useTranslations("Nav");
@@ -59,10 +60,15 @@ export function SiteHeader() {
     readHeaderState,
     (): HeaderState => "top|light",
   );
-  const [position, surface] = state.split("|") as ["top" | "scrolled", SurfaceTheme];
+  const [position, surface] = state.split("|") as [
+    "top" | "scrolled",
+    SurfaceTheme,
+  ];
   const scrolled = position === "scrolled";
   const pathname = usePathname();
-  const activeId = useActiveSection(visibleNavigation.map((item) => item.hash ?? ""));
+  const activeId = useActiveSection(
+    visibleNavigation.map(item => item.hash ?? ""),
+  );
   const [hovered, setHovered] = useState<string | null>(null);
 
   return (
@@ -82,28 +88,38 @@ export function SiteHeader() {
         aria-label={tNav("label")}
         className={cn(
           "flex items-center justify-between transition-[height,padding] duration-500 ease-(--ease-editorial)",
-          scrolled ? "h-14 px-4 md:ps-6 md:pe-3" : "container-editorial h-20 md:h-24",
+          scrolled
+            ? "h-14 px-4 md:ps-6 md:pe-3"
+            : "container-editorial h-20 md:h-24",
         )}
       >
-        <Wordmark transitionTypes={pathname !== "/" ? ["nav-back"] : undefined} />
+        <Wordmark
+          transitionTypes={pathname !== "/" ? ["nav-back"] : undefined}
+        />
 
         <ul
           className="hidden items-center lg:flex"
           onPointerLeave={() => setHovered(null)}
         >
-          {visibleNavigation.map((item) => {
-            const isActive = item.hash ? item.hash === activeId : pathname === item.pathname;
+          {visibleNavigation.map(item => {
+            const isActive = item.hash
+              ? item.hash === activeId
+              : pathname === item.pathname;
             return (
               <li key={item.key} className="relative">
                 <Link
                   href={navHref(item)}
-                  transitionTypes={item.pathname !== "/" ? ["nav-forward"] : undefined}
+                  transitionTypes={
+                    item.pathname !== "/" ? ["nav-forward"] : undefined
+                  }
                   onPointerEnter={() => setHovered(item.key)}
                   onFocus={() => setHovered(item.key)}
                   onBlur={() => setHovered(null)}
                   className={cn(
                     "relative block rounded-full px-3 py-2 text-[0.8125rem] font-medium tracking-tight transition-colors duration-300 xl:px-3.5",
-                    isActive || hovered === item.key ? "text-foreground" : "text-muted-foreground",
+                    isActive || hovered === item.key
+                      ? "text-foreground"
+                      : "text-muted-foreground",
                   )}
                 >
                   {hovered === item.key && (
@@ -137,7 +153,9 @@ export function SiteHeader() {
             variant="outline"
             nativeButton={false}
             className="ms-1 hidden md:inline-flex"
-            render={<a href={professor.cv.href} download={professor.cv.fileName} />}
+            render={
+              <a href={professor.cv.href} download={professor.cv.fileName} />
+            }
           >
             {t("downloadCv")}
             <Download aria-hidden className="size-3.5" />

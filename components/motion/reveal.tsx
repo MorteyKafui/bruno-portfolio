@@ -4,7 +4,14 @@ import { motion, type HTMLMotionProps } from "motion/react";
 
 export const editorialEase = [0.22, 1, 0.36, 1] as const;
 
-type RevealTag = "div" | "li" | "p" | "span" | "figure" | "figcaption" | "article";
+type RevealTag =
+  | "div"
+  | "li"
+  | "p"
+  | "span"
+  | "figure"
+  | "figcaption"
+  | "article";
 
 const elements = {
   div: motion.div,
@@ -19,7 +26,6 @@ const elements = {
 interface RevealProps extends HTMLMotionProps<"div"> {
   as?: RevealTag;
   delay?: number;
-  /** Vertical travel in pixels before settling. */
   y?: number;
   amount?: number;
   once?: boolean;

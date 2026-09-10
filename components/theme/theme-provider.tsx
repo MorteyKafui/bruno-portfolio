@@ -29,10 +29,6 @@ function applyTheme(theme: Theme) {
   document.documentElement.classList.toggle("dark", theme === "dark");
 }
 
-/**
- * Dark-by-default theme without injecting a `<script>` (React 19 forbids that
- * in client components, and the locale layout re-renders on language change).
- */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("dark");
 
@@ -54,7 +50,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     [theme, setTheme],
   );
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  );
 }
 
 export function useTheme() {
