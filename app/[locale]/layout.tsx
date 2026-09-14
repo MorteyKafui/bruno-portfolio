@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Fraunces, Noto_Naskh_Arabic, Noto_Sans_Arabic, Spline_Sans } from "next/font/google";
+import {
+  Fraunces,
+  Noto_Naskh_Arabic,
+  Noto_Sans_Arabic,
+  Spline_Sans,
+} from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
@@ -17,6 +22,8 @@ import { getDirection } from "@/i18n/config";
 import { localize } from "@/i18n/localized";
 import { routing } from "@/i18n/routing";
 import { absoluteUrl, ogLocales, siteUrl } from "@/lib/seo";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const spline = Spline_Sans({
   subsets: ["latin", "latin-ext"],
@@ -48,7 +55,7 @@ const notoNaskhArabic = Noto_Naskh_Arabic({
 });
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return routing.locales.map(locale => ({ locale }));
 }
 
 export async function generateMetadata({
@@ -95,7 +102,10 @@ function personJsonLd(locale: (typeof routing.locales)[number]) {
       "@type": "CollegeOrUniversity",
       name: localize(professor.current.institution, locale),
       department: professor.current.unit
-        ? { "@type": "Organization", name: localize(professor.current.unit, locale) }
+        ? {
+            "@type": "Organization",
+            name: localize(professor.current.unit, locale),
+          }
         : undefined,
     },
     address: {
@@ -103,13 +113,16 @@ function personJsonLd(locale: (typeof routing.locales)[number]) {
       addressLocality: "Winneba",
       addressCountry: professor.countryCode,
     },
-    knowsAbout: researchAreas.map((area) => localize(area.title, locale)),
+    knowsAbout: researchAreas.map(area => localize(area.title, locale)),
     knowsLanguage: routing.locales,
   };
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
 
-export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: LayoutProps<"/[locale]">) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   const t = await getTranslations({ locale, namespace: "Common" });
@@ -140,7 +153,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
             </a>
             <MotionProvider>
               <SiteHeader />
-              <div className="relative z-10 flex-1 bg-background">{children}</div>
+              <div className="relative z-10 flex-1 bg-background">
+                {children}
+              </div>
               <SiteFooter locale={locale} />
             </MotionProvider>
             <CookieBanner />
@@ -152,6 +167,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{ __html: personJsonLd(locale) }}
         />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
