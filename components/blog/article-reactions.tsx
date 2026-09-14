@@ -29,7 +29,11 @@ function normalizeStored(raw: unknown): StoredReaction {
   return {
     claps: typeof value.claps === "number" ? value.claps : 0,
     loves:
-      typeof value.loves === "number" ? value.loves : value.loved === true ? 1 : 0,
+      typeof value.loves === "number"
+        ? value.loves
+        : value.loved === true
+          ? 1
+          : 0,
   };
 }
 
@@ -52,7 +56,11 @@ function writeStore(next: Record<string, StoredReaction>) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
 }
 
-export function ArticleReactions({ slug, initialClaps, initialLoves }: ArticleReactionsProps) {
+export function ArticleReactions({
+  slug,
+  initialClaps,
+  initialLoves,
+}: ArticleReactionsProps) {
   const t = useTranslations("Blog");
   const reduce = usePrefersReducedMotion();
   const [, startTransition] = useTransition();
@@ -65,13 +73,13 @@ export function ArticleReactions({ slug, initialClaps, initialLoves }: ArticleRe
     const stored = readStore()[slug] ?? { claps: 0, loves: 0 };
     setMine(stored);
     void loadReactions(slug)
-      .then((next) => {
+      .then(next => {
         setClaps(next.claps);
         setLoves(next.loves);
       })
       .catch(() => {
-        setClaps((n) => n + stored.claps);
-        setLoves((n) => n + stored.loves);
+        setClaps(n => n + stored.claps);
+        setLoves(n => n + stored.loves);
       });
   }, [slug]);
 
@@ -84,7 +92,7 @@ export function ArticleReactions({ slug, initialClaps, initialLoves }: ArticleRe
 
   const onClap = () => {
     if (mine.claps >= MAX_CLAPS) return;
-    setClaps((n) => n + 1);
+    setClaps(n => n + 1);
     persistMine({ ...mine, claps: mine.claps + 1 });
     setBurst("clap");
     void playClap();
@@ -100,7 +108,7 @@ export function ArticleReactions({ slug, initialClaps, initialLoves }: ArticleRe
 
   const onLove = () => {
     if (mine.loves >= MAX_LOVES) return;
-    setLoves((n) => n + 1);
+    setLoves(n => n + 1);
     persistMine({ ...mine, loves: mine.loves + 1 });
     setBurst("love");
     void playLove();
@@ -116,7 +124,9 @@ export function ArticleReactions({ slug, initialClaps, initialLoves }: ArticleRe
 
   return (
     <div className="mt-16 flex flex-wrap items-center gap-3 border-t border-border pt-10">
-      <p className="text-eyebrow me-4 text-muted-foreground">{t("appreciate")}</p>
+      <p className="text-eyebrow me-4 text-muted-foreground">
+        {t("appreciate")}
+      </p>
       <ReactionButton
         pressed={mine.claps > 0}
         disabled={mine.claps >= MAX_CLAPS}
@@ -199,7 +209,7 @@ function ReactionButton({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             onAnimationComplete={onBurstEnd}
-            className="pointer-events-none absolute start-4 top-0 text-lg"
+            className="pointer-events-none absolute inset-s-4 top-0 text-lg"
           >
             {emoji}
           </motion.span>

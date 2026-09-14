@@ -6,7 +6,6 @@ interface SectionHeadingProps {
   index: string;
   eyebrow: string;
   lines: string[];
-  /** Zero-based line to render as the italic accent; `last` by default. */
   accent?: number | "last" | "none";
   as?: "h1" | "h2" | "h3";
   id?: string;
@@ -39,7 +38,12 @@ export function SectionHeading({
   }));
 
   return (
-    <div className={cn("@container min-w-0 flex flex-col gap-8 md:gap-10", className)}>
+    <div
+      className={cn(
+        "@container min-w-0 flex flex-col gap-8 md:gap-10",
+        className,
+      )}
+    >
       <Eyebrow index={index} className={eyebrowClassName}>
         {eyebrow}
       </Eyebrow>

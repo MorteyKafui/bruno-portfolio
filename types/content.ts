@@ -16,9 +16,9 @@ export interface Link {
 
 /** A primary navigation entry; the label comes from the `Nav` messages. */
 export interface NavItem {
-  key: "about" | "research" | "services" | "contact" | "blog";
+  key: "about" | "research" | "publications" | "services" | "contact" | "blog";
   /** Locale-aware pathname. Homepage acts also carry a `hash`. */
-  pathname: "/" | "/blog";
+  pathname: "/" | "/publications" | "/blog";
   hash?: string;
   /** Hidden until the destination route ships. */
   enabled: boolean;

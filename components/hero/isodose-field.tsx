@@ -15,10 +15,6 @@ const rings = [
   { cx: 460, cy: 380, rx: 50, ry: 33, travel: 78 },
 ];
 
-/**
- * Isodose contours that ease toward the pointer. One rAF write to CSS
- * variables, no Motion springs, paused when off-screen or on touch.
- */
 export function IsodoseField({ className }: { className?: string }) {
   const svgRef = useRef<SVGSVGElement>(null);
   const finePointer = useMediaQuery("(pointer: fine)");
@@ -85,7 +81,9 @@ export function IsodoseField({ className }: { className?: string }) {
           className={index === rings.length - 1 ? "text-accent" : undefined}
           style={{
             transform: `translate(calc(var(--iso-x) * ${ring.travel}px), calc(var(--iso-y) * ${ring.travel}px))`,
-            transition: active ? "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)" : undefined,
+            transition: active
+              ? "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)"
+              : undefined,
             willChange: active ? "transform" : undefined,
           }}
         />

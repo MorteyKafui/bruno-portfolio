@@ -1,12 +1,8 @@
-/**
- * Synthesizes a short mechanical "light switch" click with the Web Audio API:
- * a bright transient, a burst of filtered noise, and a low thud. No audio
- * asset, no network, and it only runs from a user gesture.
- */
 let context: AudioContext | null = null;
 
 function getContext() {
-  if (typeof window === "undefined" || typeof AudioContext === "undefined") return null;
+  if (typeof window === "undefined" || typeof AudioContext === "undefined")
+    return null;
   context ??= new AudioContext();
   return context;
 }

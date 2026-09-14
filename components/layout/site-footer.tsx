@@ -12,12 +12,6 @@ import { Link } from "@/i18n/navigation";
 import { BackToTop } from "./back-to-top";
 import { EmailReveal } from "./email-reveal";
 
-/**
- * Adapted from the efferd `footer-6` block: from `md` up the footer sits
- * behind the page and is revealed as the last section scrolls away
- * (clip-path over a fixed, sticky panel). On small screens it is a normal
- * footer so nothing needs to scroll inside it.
- */
 export async function SiteFooter({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale, namespace: "Footer" });
   const tNav = await getTranslations({ locale, namespace: "Nav" });
@@ -32,10 +26,13 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
     >
       <div className="md:fixed md:bottom-0 md:h-(--footer-height) md:w-full">
         <div className="relative isolate overflow-hidden bg-background md:sticky md:top-[calc(100vh-var(--footer-height))] md:h-full">
-          <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 -z-10"
+          >
             <div className="absolute inset-0 bg-linear-to-b from-background via-background to-[#0f2d32]" />
-            <div className="absolute -bottom-1/2 start-[-10%] h-[80vmax] w-[80vmax] rounded-full bg-[radial-gradient(closest-side,rgb(79_163_165/0.2),transparent_70%)]" />
-            <div className="absolute -top-1/3 end-[-20%] h-[60vmax] w-[60vmax] rounded-full bg-[radial-gradient(closest-side,rgb(82_124_136/0.14),transparent_70%)]" />
+            <div className="absolute -bottom-1/2 inset-s-[-10%] h-[80vmax] w-[80vmax] rounded-full bg-[radial-gradient(closest-side,rgb(79_163_165/0.2),transparent_70%)]" />
+            <div className="absolute -top-1/3 nset-e-[-20%] h-[60vmax] w-[60vmax] rounded-full bg-[radial-gradient(closest-side,rgb(82_124_136/0.14),transparent_70%)]" />
           </div>
 
           <div className="container-editorial flex h-full flex-col justify-between gap-12 py-16 md:py-14">
@@ -53,19 +50,31 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
                   download={professor.cv.fileName}
                   className="group inline-flex items-center gap-2 text-sm text-foreground/80 transition-colors hover:text-accent"
                 >
-                  <Download aria-hidden className="size-4 transition-transform duration-300 group-hover:translate-y-0.5" />
+                  <Download
+                    aria-hidden
+                    className="size-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                  />
                   {t("cv")}
                 </a>
               </Reveal>
 
-              <Reveal as="div" delay={0.08} className="lg:col-span-2 lg:col-start-7">
+              <Reveal
+                as="div"
+                delay={0.08}
+                className="lg:col-span-2 lg:col-start-7"
+              >
                 <nav aria-label={t("explore")}>
-                  <p className="text-eyebrow mb-5 text-muted-foreground">{t("explore")}</p>
+                  <p className="text-eyebrow mb-5 text-muted-foreground">
+                    {t("explore")}
+                  </p>
                   <ul className="flex flex-col gap-3">
-                    {visibleNavigation.map((item) => (
+                    {visibleNavigation.map(item => (
                       <li key={item.key}>
                         <Link
                           href={navHref(item)}
+                          transitionTypes={
+                            item.pathname !== "/" ? ["nav-forward"] : undefined
+                          }
                           className="text-sm text-foreground/80 transition-colors duration-300 hover:text-accent"
                         >
                           {tNav(item.key)}
@@ -77,32 +86,43 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
               </Reveal>
 
               <Reveal delay={0.16} className="lg:col-span-2">
-                <p className="text-eyebrow mb-5 text-muted-foreground">{t("connect")}</p>
+                <p className="text-eyebrow mb-5 text-muted-foreground">
+                  {t("connect")}
+                </p>
                 <dl className="flex flex-col gap-4 text-sm">
                   {professor.email && (
                     <div className="flex flex-col gap-1">
-                      <dt className="text-xs text-muted-foreground">{tSections("emailLabel")}</dt>
+                      <dt className="text-xs text-muted-foreground">
+                        {tSections("emailLabel")}
+                      </dt>
                       <dd className="text-foreground/80">
                         <EmailReveal email={professor.email} />
                       </dd>
                     </div>
                   )}
                   <div className="flex flex-col gap-1">
-                    <dt className="text-xs text-muted-foreground">{tSections("locationLabel")}</dt>
-                    <dd className="text-foreground/80">{localize(professor.location, locale)}</dd>
+                    <dt className="text-xs text-muted-foreground">
+                      {tSections("locationLabel")}
+                    </dt>
+                    <dd className="text-foreground/80">
+                      {localize(professor.location, locale)}
+                    </dd>
                   </div>
                 </dl>
               </Reveal>
 
               <Reveal delay={0.24} className="lg:col-span-2">
-                <p className="text-eyebrow mb-3 text-muted-foreground">{t("language")}</p>
+                <p className="text-eyebrow mb-3 text-muted-foreground">
+                  {t("language")}
+                </p>
                 <LanguageSwitcher variant="list" />
               </Reveal>
             </div>
 
             <div className="flex flex-col gap-4 border-t border-foreground/10 pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
               <p>
-                &copy; {year} {professor.honorific} {professor.fullName}. {t("rights")}
+                &copy; {year} {professor.honorific} {professor.fullName}.{" "}
+                {t("rights")}
               </p>
               <BackToTop />
             </div>

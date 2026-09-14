@@ -2,13 +2,13 @@ import { cn } from "@/lib/utils";
 
 type Variant = "mri" | "ct";
 
-/**
- * Illustrative axial pelvis cross-section, drawn from the same geometry in two
- * appearances: a T2-weighted MRI (bright fluid and fat, dark cortical bone) and
- * a CT (bright bone, mid-grey soft tissue, dark fluid, black air). Purely
- * schematic; never presented as patient data.
- */
-export function ScanPlate({ variant, className }: { variant: Variant; className?: string }) {
+export function ScanPlate({
+  variant,
+  className,
+}: {
+  variant: Variant;
+  className?: string;
+}) {
   const mri = variant === "mri";
   const c = mri
     ? {
@@ -46,7 +46,12 @@ export function ScanPlate({ variant, className }: { variant: Variant; className?
           <stop offset="0%" stopColor={c.muscle} />
           <stop offset="100%" stopColor={c.body} />
         </radialGradient>
-        <pattern id={`${variant}-grain`} width="3" height="3" patternUnits="userSpaceOnUse">
+        <pattern
+          id={`${variant}-grain`}
+          width="3"
+          height="3"
+          patternUnits="userSpaceOnUse"
+        >
           <rect width="3" height="3" fill="transparent" />
           <rect width="1" height="1" fill="#ffffff" opacity="0.08" />
         </pattern>
@@ -56,7 +61,13 @@ export function ScanPlate({ variant, className }: { variant: Variant; className?
 
       {/* Subcutaneous fat and body outline */}
       <ellipse cx="200" cy="160" rx="172" ry="118" fill={c.fat} />
-      <ellipse cx="200" cy="162" rx="158" ry="105" fill={`url(#${variant}-body)`} />
+      <ellipse
+        cx="200"
+        cy="162"
+        rx="158"
+        ry="105"
+        fill={`url(#${variant}-body)`}
+      />
 
       {/* Iliac wings */}
       <path
@@ -73,10 +84,34 @@ export function ScanPlate({ variant, className }: { variant: Variant; className?
       />
 
       {/* Femoral heads with acetabular cups */}
-      <path d="M78 172 A 40 40 0 0 1 132 176" fill="none" stroke={c.cortex} strokeWidth="7" />
-      <path d="M322 172 A 40 40 0 0 0 268 176" fill="none" stroke={c.cortex} strokeWidth="7" />
-      <circle cx="104" cy="190" r="26" fill={c.marrow} stroke={c.cortex} strokeWidth={mri ? 5 : 4} />
-      <circle cx="296" cy="190" r="26" fill={c.marrow} stroke={c.cortex} strokeWidth={mri ? 5 : 4} />
+      <path
+        d="M78 172 A 40 40 0 0 1 132 176"
+        fill="none"
+        stroke={c.cortex}
+        strokeWidth="7"
+      />
+      <path
+        d="M322 172 A 40 40 0 0 0 268 176"
+        fill="none"
+        stroke={c.cortex}
+        strokeWidth="7"
+      />
+      <circle
+        cx="104"
+        cy="190"
+        r="26"
+        fill={c.marrow}
+        stroke={c.cortex}
+        strokeWidth={mri ? 5 : 4}
+      />
+      <circle
+        cx="296"
+        cy="190"
+        r="26"
+        fill={c.marrow}
+        stroke={c.cortex}
+        strokeWidth={mri ? 5 : 4}
+      />
 
       {/* Sacrum */}
       <path
@@ -98,7 +133,13 @@ export function ScanPlate({ variant, className }: { variant: Variant; className?
       {/* Scale marks */}
       <g stroke="#ffffff" opacity="0.45" strokeWidth="1">
         {Array.from({ length: 9 }, (_, i) => (
-          <line key={i} x1={20 + i * 10} y1="284" x2={20 + i * 10} y2={i % 4 === 0 ? 276 : 280} />
+          <line
+            key={i}
+            x1={20 + i * 10}
+            y1="284"
+            x2={20 + i * 10}
+            y2={i % 4 === 0 ? 276 : 280}
+          />
         ))}
       </g>
     </svg>

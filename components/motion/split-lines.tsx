@@ -19,7 +19,6 @@ interface SplitLinesProps {
   lineClassName?: string;
   delay?: number;
   stagger?: number;
-  /** `mount` animates on load (hero); `inView` waits for scroll. */
   trigger?: "mount" | "inView";
 }
 

@@ -19,7 +19,7 @@ export function Impact({ locale }: { locale: Locale }) {
           alt={t(impact.image.alt)}
           sizes="(min-width: 1024px) 50vw, 100vw"
           amount={6}
-          className="clip-graduation aspect-[4/5] sm:aspect-[16/10] lg:col-span-6 lg:aspect-auto lg:min-h-svh"
+          className="clip-graduation aspect-4/5 sm:aspect-16/10 lg:col-span-6 lg:aspect-auto lg:min-h-svh"
         />
 
         <div className="flex flex-col justify-center py-24 lg:col-span-5 lg:col-start-8 lg:py-32">
@@ -34,12 +34,18 @@ export function Impact({ locale }: { locale: Locale }) {
             />
 
             <Reveal delay={0.1} className="mt-12">
-              <ol className="flex flex-wrap items-center gap-x-3 gap-y-2" aria-label={t(impact.eyebrow)}>
+              <ol
+                className="flex flex-wrap items-center gap-x-3 gap-y-2"
+                aria-label={t(impact.eyebrow)}
+              >
                 {chain.map((step, index) => (
                   <li key={step} className="flex items-center gap-3">
                     <span className="text-eyebrow text-foreground">{step}</span>
                     {index < chain.length - 1 && (
-                      <ArrowRight aria-hidden className="size-3.5 text-accent rtl:-scale-x-100" />
+                      <ArrowRight
+                        aria-hidden
+                        className="size-3.5 text-accent rtl:-scale-x-100"
+                      />
                     )}
                   </li>
                 ))}

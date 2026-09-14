@@ -11,11 +11,11 @@ interface WordmarkProps {
   transitionTypes?: string[];
 }
 
-/**
- * "I.K. Acquah" in the display serif. The initials' periods take the accent
- * colour, a quiet signature detail that reads at any size.
- */
-export function Wordmark({ className, onClick, transitionTypes }: WordmarkProps) {
+export function Wordmark({
+  className,
+  onClick,
+  transitionTypes,
+}: WordmarkProps) {
   const t = useTranslations("Header");
   const parts = professor.shortName.split(".");
 

@@ -1,16 +1,18 @@
-/**
- * Short synthesized applause and a two-note chime. No audio files, and both
- * run only from a click so they never start on page load.
- */
 let context: AudioContext | null = null;
 
 function getContext() {
-  if (typeof window === "undefined" || typeof AudioContext === "undefined") return null;
+  if (typeof window === "undefined" || typeof AudioContext === "undefined")
+    return null;
   context ??= new AudioContext();
   return context;
 }
 
-function noiseBurst(ctx: AudioContext, master: GainNode, when: number, freq: number) {
+function noiseBurst(
+  ctx: AudioContext,
+  master: GainNode,
+  when: number,
+  freq: number,
+) {
   const length = Math.floor(ctx.sampleRate * 0.07);
   const buffer = ctx.createBuffer(1, length, ctx.sampleRate);
   const data = buffer.getChannelData(0);
