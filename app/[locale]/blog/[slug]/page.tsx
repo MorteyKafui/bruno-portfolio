@@ -15,6 +15,7 @@ import { getPost, listPosts } from "@/lib/blog";
 import { extractHeadings } from "@/lib/headings";
 import { alternatesFor } from "@/lib/seo";
 import { routing } from "@/i18n/routing";
+import { formatDate } from "@/lib/date";
 
 export async function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -63,20 +64,41 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
                   {post.title}
                 </DisplayHeading>
               </ViewTransition>
-              <p className="mt-6 text-sm text-muted-foreground">
+              <div className="mt-6 flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground">
                 <time dateTime={post.date}>
-                  {t("published")} {post.date}
+                  {t("published")} {formatDate(post.date, locale)}
                 </time>
-              </p>
+
+                <span aria-hidden="true">·</span>
+
+                <span>{t("readingTime", { minutes: post.readingTime })}</span>
+              </div>
               {fallback && (
                 <p className="mt-6 rounded-md border border-border bg-card px-4 py-3 text-sm text-muted-foreground">
                   {t("fallback")}
                 </p>
               )}
               <p className="text-lead mt-10 text-muted-foreground">{post.excerpt}</p>
+
+              {post.tags && post.tags.length > 0 && (
+                <ul
+                  className="mt-8 flex flex-wrap gap-2"
+                  aria-label={t("topics")}
+                >
+                  {post.tags.map((tag) => (
+                    <li key={tag}>
+                      <span className="text-eyebrow inline-flex rounded-full border border-border bg-card px-3 py-1.5 text-muted-foreground">
+                        {tag}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
               <div className="mt-12">
                 <ArticleBody source={post.body} />
               </div>
+
               <ArticleReactions slug={post.slug} initialClaps={0} initialLoves={0} />
               <p className="mt-16">
                 <Link
