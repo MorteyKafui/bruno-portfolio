@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { professor } from "@/data/professor";
+import { displayName } from "@/data/professor";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
@@ -17,25 +17,19 @@ export function Wordmark({
   transitionTypes,
 }: WordmarkProps) {
   const t = useTranslations("Header");
-  const parts = professor.shortName.split(".");
 
   return (
     <Link
       href="/"
       onClick={onClick}
       transitionTypes={transitionTypes}
-      aria-label={t("home", { name: professor.fullName })}
+      aria-label={t("home", { name: displayName })}
       className={cn(
         "font-display text-[1.375rem] leading-none tracking-tight whitespace-nowrap text-foreground",
         className,
       )}
     >
-      {parts.map((part, index) => (
-        <span key={index}>
-          {part}
-          {index < parts.length - 1 && <span className="text-accent">.</span>}
-        </span>
-      ))}
+      {displayName}
     </Link>
   );
 }

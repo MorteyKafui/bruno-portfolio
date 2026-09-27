@@ -5,7 +5,7 @@ import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { Reveal } from "@/components/motion/reveal";
 import { navHref, visibleNavigation } from "@/data/navigation";
 import { footer } from "@/data/home";
-import { professor } from "@/data/professor";
+import { displayName, professor } from "@/data/professor";
 import type { Locale } from "@/i18n/config";
 import { localize } from "@/i18n/localized";
 import { Link } from "@/i18n/navigation";
@@ -39,7 +39,7 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
             <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
               <Reveal className="flex flex-col gap-6 lg:col-span-5">
                 <DisplayHeading as="p" size="md">
-                  {professor.fullName}
+                 {displayName}
                   <span className="text-accent">.</span>
                 </DisplayHeading>
                 <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
