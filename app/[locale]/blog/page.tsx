@@ -12,6 +12,7 @@ import { Link } from "@/i18n/navigation";
 import { listPosts } from "@/lib/blog";
 import { alternatesFor } from "@/lib/seo";
 import { routing } from "@/i18n/routing";
+import { formatDate } from "@/lib/date";
 
 type BlogIndexProps = { params: Promise<{ locale: string }> };
 
@@ -62,16 +63,21 @@ export default async function BlogIndex({ params }: BlogIndexProps) {
                         prefetch
                         className="group grid gap-4 py-10 md:grid-cols-12 md:items-baseline"
                       >
-                        <time
-                          dateTime={post.date}
-                          className="text-eyebrow text-muted-foreground md:col-span-2"
-                        >
-                          {post.date}
-                        </time>
+                        <div className="text-eyebrow flex flex-wrap items-center gap-x-2 text-muted-foreground md:col-span-2">
+                          <time dateTime={post.date}>
+                            {formatDate(post.date, locale)}
+                          </time>
+
+                          <span aria-hidden="true">·</span>
+
+                          <span className="mt-3">{t("readingTime", { minutes: post.readingTime })}</span>
+                        </div>
+
                         <div className="flex flex-col gap-3 md:col-span-8">
                           {post.category && (
                             <span className="text-eyebrow text-accent">{post.category}</span>
                           )}
+
                           <ViewTransition
                             name={`blog-title-${post.slug}`}
                             share="text-morph"
@@ -81,9 +87,25 @@ export default async function BlogIndex({ params }: BlogIndexProps) {
                               {post.title}
                             </h2>
                           </ViewTransition>
+
                           <p className="max-w-xl text-[0.9375rem] leading-relaxed text-muted-foreground">
                             {post.excerpt}
                           </p>
+
+                          {post.tags && post.tags.length > 0 && (
+                            <ul
+                              className="flex flex-wrap gap-2 pt-1"
+                              aria-label={t("topics")}
+                            >
+                              {post.tags.map((tag) => (
+                                <li key={tag}>
+                                  <span className="text-eyebrow inline-flex rounded-full border border-border px-2.5 py-1 text-muted-foreground">
+                                    {tag}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                         </div>
                         <span className="text-eyebrow text-muted-foreground transition-colors group-hover:text-accent md:col-span-2 md:text-end">
                           {t("read")}

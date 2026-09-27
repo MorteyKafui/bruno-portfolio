@@ -8,6 +8,7 @@ export interface BlogFrontmatter {
   excerpt: string;
   date: string;
   category?: string;
+  tags?: string[];
   /** Slug of the original article when this file is a translation. */
   translationOf?: string;
 }
@@ -20,10 +21,27 @@ export interface BlogPost {
   excerpt: string;
   date: string;
   category?: string;
+  tags?: string[];
+  readingTime: number;
   body: string;
 }
 
 const BLOG_ROOT = path.join(process.cwd(), "content/blog");
+
+function estimateReadingTime(body: string): number {
+  const words = body
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`[^`]*`/g, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/[#>*_[\]()!-]/g, " ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+
+  const wordsPerMinute = 200;
+
+  return Math.max(1, Math.ceil(words / wordsPerMinute));
+}
 
 function readLocaleDir(locale: Locale): Omit<BlogPost, "sourceLocale">[] {
   const dir = path.join(BLOG_ROOT, locale);
@@ -36,6 +54,7 @@ function readLocaleDir(locale: Locale): Omit<BlogPost, "sourceLocale">[] {
       const raw = fs.readFileSync(path.join(dir, file), "utf8");
       const { data, content } = matter(raw);
       const fm = data as BlogFrontmatter;
+
       return {
         slug: file.replace(/\.mdx?$/, ""),
         locale,
@@ -43,6 +62,8 @@ function readLocaleDir(locale: Locale): Omit<BlogPost, "sourceLocale">[] {
         excerpt: fm.excerpt,
         date: fm.date,
         category: fm.category,
+        tags: fm.tags,
+        readingTime: estimateReadingTime(content),
         body: content.trim(),
       };
     })

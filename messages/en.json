@@ -65,13 +65,14 @@
   "Blog": {
     "eyebrow": "Insights",
     "title": "Notes from the lab and the lecture hall.",
-    "lead": "Short essays on medical physics, imaging, radiation safety, and teaching. Three sample notes are here so the reading layout can be judged. Replace them with Dr Acquah's own pieces.",
-    "empty": "The first essays will appear here. Nothing is drafted as a placeholder.",
+    "lead": "Essays on medical physics, imaging, radiation safety, physics education, teaching, and the ideas connecting research with the classroom.",
+    "empty": "The first essays will appear here.",
     "fallback": "This article is not yet available in the selected language. The original English version is shown.",
     "read": "Read",
     "published": "Published",
+    "readingTime": "{minutes} min read",
+    "topics": "Article topics",
     "onThisPage": "On this page",
-    "sample": "Sample",
     "appreciate": "Was this useful?",
     "clap": "Clap",
     "love": "Love"

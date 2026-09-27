@@ -65,13 +65,14 @@
   "Blog": {
     "eyebrow": "Notas",
     "title": "Notas do laboratório e da aula.",
-    "lead": "Ensaios curtos sobre física médica, imagem, proteção radiológica e ensino. Há três notas de exemplo para avaliar a leitura. Substitua-as por textos do Dr Acquah.",
+    "lead": "Ensaios sobre física médica, imagem, proteção radiológica, ensino da física e as ideias que ligam a investigação à sala de aula.",
+    "readingTime": "{minutes} min de leitura",
+    "topics": "Temas do artigo",
     "empty": "Os primeiros ensaios aparecerão aqui.",
     "fallback": "Este artigo ainda não está neste idioma. Mostra-se a versão original em inglês.",
     "read": "Ler",
     "published": "Publicado",
     "onThisPage": "Nesta página",
-    "sample": "Exemplo",
     "appreciate": "Isto foi útil?",
     "clap": "Aplaudir",
     "love": "Gostar"

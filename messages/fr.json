@@ -65,13 +65,14 @@
   "Blog": {
     "eyebrow": "Notes",
     "title": "Notes du laboratoire et de l'amphi.",
-    "lead": "Courts essais sur la physique médicale, l'imagerie, la radioprotection et l'enseignement. Trois notes d'exemple sont ici pour juger la lecture. Remplacez-les par les textes du Dr Acquah.",
+    "lead": "Des essais sur la physique médicale, l'imagerie, la radioprotection, l'enseignement de la physique et les liens entre la recherche et la salle de classe.",
+    "readingTime": "{minutes} min de lecture",
+    "topics": "Thèmes de l'article",
     "empty": "Les premiers essais apparaîtront ici.",
     "fallback": "Cet article n'est pas encore disponible dans cette langue. La version anglaise est affichée.",
     "read": "Lire",
     "published": "Publié",
     "onThisPage": "Sur cette page",
-    "sample": "Exemple",
     "appreciate": "Cela vous a-t-il été utile ?",
     "clap": "Applaudir",
     "love": "Aimer"
